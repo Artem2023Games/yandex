@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Моя стартовая</title>
+<style>
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  :root {
+    --accent: #fc3f1d;
+    --accent-dark: #e0350f;
+    --accent-rgb: 252, 63, 29;
+  }
+  body.google {
+    --accent: #4285f4;
+    --accent-dark: #3367d6;
+    --accent-rgb: 66, 133, 244;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'YS Text', 'Segoe UI', Arial, sans-serif;
+    background: #fff;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  /* ============ АНИМАЦИИ ============ */
+  @keyframes logoAppear {
+    0%   { opacity: 0; transform: scale(0.7) translateY(-20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes searchSlide {
+    0%   { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes tilePop {
+    0%   { opacity: 0; transform: scale(0.5) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes flagsDrop {
+    0%   { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Радужное вращение рамки */
+  @keyframes spin {
+    to { --angle: 360deg; }
+  }
+
+  .logo {
+    font-size: 72px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    margin-bottom: 20px;
+    user-select: none;
+    animation: logoAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.45s ease,
+                font-size 0.45s ease;
+    transform-origin: center;
+  }
+  .logo.switching {
+    transform: scale(0.5) rotate(-10deg);
+    opacity: 0;
+  }
+  .logo .ya { color: var(--accent); transition: color 0.5s ease; }
+  .logo .rest { color: #000; transition: color 0.5s ease; }
+
+  .greeting {
+    font-size: 20px;
+    color: #666;
+    margin-bottom: 20px;
+    animation: fadeIn 0.9s 0.3s both;
+    transition: color 0.5s ease;
+  }
+
+  /* Контейнер поиска */
+  .search-wrap {
+    display: flex;
+    width: 100%;
+    max-width: 700px;
+    height: 52px;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease;
+    animation: searchSlide 0.7s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    position: relative;
+  }
+  .search-wrap:focus-within {
+    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
+  }
+  #q {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0 18px;
+    font-size: 17px;
+    background: transparent;
+    color: #000;
+    transition: color 0.5s ease;
+  }
+  #go {
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 17px;
+    padding: 0 28px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.5s ease;
+    font-family: inherit;
+  }
+  #go:hover { background: var(--accent-dark); }
+
+  /* ============ РАДУЖНАЯ РАМКА ДЛЯ GOOGLE ============ */
+  body.google .search-wrap {
+    border: none;
+    padding: 3px;
+    background: transparent;
+    overflow: visible;
+    border-radius: 13px;
+    animation: searchSlide 0.7s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  body.google .search-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 13px;
+    background: conic-gradient(
+      from var(--angle),
+      #4285f4,
+      #ea4335,
+      #fbbc05,
+      #34a853,
+      #4285f4
+    );
+    animation: spin 4s linear infinite;
+    z-index: 0;
+  }
+
+  body.google .search-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 10px;
+    background: #fff;
+    z-index: 1;
+    transition: background 0.5s ease;
+  }
+
+  body.dark.google .search-wrap::after {
+    background: #1a1a2e;
+  }
+
+  body.google #q,
+  body.google #go {
+    position: relative;
+    z-index: 2;
+  }
+
+  body.google .search-wrap:focus-within {
+    box-shadow: none;
+  }
+
+  body.google .search-wrap:focus-within::before {
+    box-shadow: 0 0 20px rgba(66, 133, 244, 0.4);
+  }
+
+  /* Автодополнение */
+  .autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 2px solid var(--accent);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    margin-top: -2px;
+    display: none;
+    z-index: 20;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: background 0.5s ease, border-color 0.5s ease;
+  }
+  body.google .autocomplete {
+    border: none;
+    background: #fff;
+    border-radius: 0 0 12px 12px;
+    margin-top: 3px;
+    padding: 2px;
+  }
+  body.google .autocomplete::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 0 0 12px 12px;
+    background: conic-gradient(
+      from var(--angle),
+      #4285f4,
+      #ea4335,
+      #fbbc05,
+      #34a853,
+      #4285f4
+    );
+    animation: spin 4s linear infinite;
+    z-index: -1;
+  }
+  body.dark .autocomplete { background: #1a1a2e; }
+  .autocomplete.show { display: block; }
+  .autocomplete .item {
+    padding: 10px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
+  }
+  .autocomplete .item:hover,
+  .autocomplete .item.active {
+    background: rgba(var(--accent-rgb), 0.08);
+  }
+  body.dark .autocomplete .item:hover,
+  body.dark .autocomplete .item.active {
+    background: rgba(var(--accent-rgb), 0.15);
+  }
+  .autocomplete .item .ico { color: #999; font-size: 14px; }
+
+  /* Тёмная тема */
+  body.dark {
+    background: #0f0f1e;
+    color: #eee;
+  }
+  body.dark .topbar a,
+  body.dark .clock { color: #bbb; }
+  body.dark .clock .time { color: #fff; }
+  body.dark .clock .date { color: #888; }
+  body.dark .logo .rest { color: #fff; }
+  body.dark .greeting { color: #aaa; }
+  body.dark #q { color: #fff; }
+  body.dark #q::placeholder { color: #888; }
+  body.dark .quick a { color: #ddd; }
+  body.dark .quick a:hover { background: rgba(255,255,255,0.08); }
+  body.dark .topbar a:hover { color: var(--accent); }
+  body.dark .tool-btn { background: rgba(255,255,255,0.15); color: #fff; }
+  body.dark .search-wrap { background: #1a1a2e; }
+  body.google.dark .search-wrap { background: transparent; }
+  body.dark .clock .tz { background: rgba(255,255,255,0.1); color: #fff; }
+  body.dark .fact-box { background: rgba(255,255,255,0.05); color: #ccc; }
+  body.dark .history-box { background: rgba(255,255,255,0.05); }
+  body.dark .history-box a { color: #ccc; }
+  body.dark .settings-panel { background: #1a1a2e; color: #fff; }
+  body.dark .settings-panel .row { border-color: #333; }
+  body.dark .settings-panel .row select { background: #0f0f1e; color: #fff; border-color: #333; }
+
+  /* Кнопки */
+  .tools {
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+  }
+  .tool-btn {
+    background: rgba(0,0,0,0.08);
+    color: #333;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.5s ease, color 0.5s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tool-btn:hover { transform: scale(1.1); background: rgba(var(--accent-rgb), 0.2); }
+
+  .topbar {
+    position: absolute;
+    top: 66px;
+    right: 24px;
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+  }
+  .topbar a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .topbar a:hover { color: var(--accent); }
+
+  /* Часы */
+  .clock {
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    transition: color 0.5s ease;
+  }
+  .clock .time {
+    font-size: 22px;
+    font-weight: 600;
+    color: #000;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.5s ease;
+  }
+  .clock .date { color: #888; transition: color 0.5s ease; }
+  .clock .tz {
+    background: rgba(0,0,0,0.06);
+    color: #333;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    outline: none;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+
+  @media (max-width: 900px) {
+    .clock, .topbar { position: static; margin: 4px; }
+  }
+
+  /* Флаги */
+  .flags {
+    margin-top: 22px;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+  .flag {
+    width: 48px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+    transition: transform 0.18s, box-shadow 0.18s;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    animation: flagsDrop 0.6s 0.4s both;
+  }
+  .flag:nth-child(2) { animation-delay: 0.5s; }
+  .flag:nth-child(3) { animation-delay: 0.6s; }
+  .flag:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.28);
+  }
+  .flag svg { width: 100%; height: 100%; display: block; }
+
+  /* Плитки */
+  .quick {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    max-width: 620px;
+    width: 100%;
+  }
+  .quick a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    padding: 12px 4px;
+    border-radius: 10px;
+    transition: background 0.3s ease, transform 0.15s, color 0.5s ease;
+    cursor: pointer;
+    animation: tilePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+  .quick a:nth-child(1) { animation-delay: 0.15s; }
+  .quick a:nth-child(2) { animation-delay: 0.20s; }
+  .quick a:nth-child(3) { animation-delay: 0.25s; }
+  .quick a:nth-child(4) { animation-delay: 0.30s; }
+  .quick a:nth-child(5) { animation-delay: 0.35s; }
+  .quick a:nth-child(6) { animation-delay: 0.40s; }
+  .quick a:nth-child(7) { animation-delay: 0.45s; }
+  .quick a:nth-child(8) { animation-delay: 0.50s; }
+  .quick a:nth-child(9) { animation-delay: 0.55s; }
+  .quick a:nth-child(10){ animation-delay: 0.60s; }
+
+  .quick a:hover { background: #f5f5f5; transform: translateY(-3px); }
+  .quick .ico {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  }
+
+  .ico-mail    { background: #ff3f40; }
+  .ico-maps    { background: #4caf50; }
+  .ico-market  { background: #ffcc00; color: #333; }
+  .ico-music   { background: #ff0066; }
+  .ico-video   { background: #0066ff; }
+  .ico-weather { background: #00a8ff; }
+  .ico-dzen    { background: #000000; }
+  .ico-youtube { background: #ff0000; }
+  .ico-gpt     { background: #10a37f; }
+  .ico-deepseek{ background: #4d6bfe; }
+
+  /* История */
+  .history-box {
+    margin-top: 20px;
+    max-width: 700px;
+    width: 100%;
+    padding: 12px 16px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    font-size: 13px;
+    animation: fadeIn 0.6s 0.7s both;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  .history-box .title {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.5s ease;
+  }
+  .history-box .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .history-box a {
+    color: #333;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 14px;
+    background: #fff;
+    transition: background 0.15s, color 0.5s ease;
+    border: 1px solid #eee;
+  }
+  .history-box a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .history-box .clear {
+    font-size: 11px;
+    color: #999;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  /* Факт дня */
+  .fact-box {
+    margin-top: 20px;
+    max-width: 700px;
+    width: 100%;
+    padding: 14px 18px;
+    background: #f5f5f5;
+    border-radius: 12px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+    animation: fadeIn 0.6s 0.8s both;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  .fact-box .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 600;
+    transition: color 0.5s ease;
+  }
+
+  /* Панель настроек */
+  .settings-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 360px;
+    max-width: 90vw;
+    height: 100vh;
+    background: #fff;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+    z-index: 200;
+    padding: 24px;
+    transition: right 0.3s ease, background 0.5s ease, color 0.5s ease;
+    overflow-y: auto;
+    color: #000;
+  }
+  .settings-panel.show { right: 0; }
+  .settings-panel h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: var(--accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: color 0.5s ease;
+  }
+  .settings-panel .close-btn {
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    color: #999;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 8px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .settings-panel .close-btn:hover {
+    background: #ff3f40;
+    color: #fff;
+  }
+  .settings-panel .row {
+    padding: 14px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    transition: border-color 0.5s ease;
+  }
+  .settings-panel .row label { color: #666; flex: 1; transition: color 0.5s ease; }
+  .settings-panel .row select {
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: #000;
+    max-width: 160px;
+    transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+  }
+  .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
+
+  @media (max-width: 700px) {
+    .logo { font-size: 52px; }
+    .quick { grid-template-columns: repeat(3, 1fr); max-width: 400px; }
+    .topbar { gap: 12px; font-size: 12px; }
+    .settings-panel { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Кнопки -->
+<div class="tools">
+  <button class="tool-btn" id="themeBtn" title="Тема">🌙</button>
+  <button class="tool-btn" id="settingsBtn" title="Настройки">⚙</button>
+</div>
+
+<!-- Часы -->
+<div class="clock">
+  <span class="time" id="clockTime">--:--:--</span>
+  <span class="date" id="clockDate"></span>
+  <select class="tz" id="tzSelect" title="Часовой пояс">
+    <option value="Europe/Moscow">🇷🇺 Москва</option>
+    <option value="Europe/Kaliningrad">🇷🇺 Калининград</option>
+    <option value="Europe/Samara">🇷🇺 Самара</option>
+    <option value="Asia/Yekaterinburg">🇷🇺 Екатеринбург</option>
+    <option value="Asia/Omsk">🇷🇺 Омск</option>
+    <option value="Asia/Krasnoyarsk">🇷🇺 Красноярск</option>
+    <option value="Asia/Irkutsk">🇷🇺 Иркутск</option>
+    <option value="Asia/Yakutsk">🇷🇺 Якутск</option>
+    <option value="Asia/Vladivostok">🇷🇺 Владивосток</option>
+    <option value="Asia/Magadan">🇷🇺 Магадан</option>
+    <option value="Asia/Kamchatka">🇷🇺 Камчатка</option>
+    <option value="Europe/Minsk">🇧🇾 Минск</option>
+    <option value="Asia/Almaty">🇰🇿 Алматы</option>
+    <option value="Asia/Astana">🇰🇿 Астана</option>
+    <option value="Asia/Aqtobe">🇰🇿 Актобе</option>
+    <option value="Asia/Atyrau">🇰🇿 Атырау</option>
+    <option value="Asia/Oral">🇰🇿 Уральск</option>
+    <option value="Asia/Qyzylorda">🇰🇿 Кызылорда</option>
+  </select>
+</div>
+
+<div class="topbar">
+  <a href="https://mail.yandex.ru" target="_blank">Почта</a>
+  <a href="https://yandex.ru/news" target="_blank">Новости</a>
+  <a href="https://yandex.ru/maps" target="_blank">Карты</a>
+  <a href="https://yandex.ru" target="_blank">Все сервисы</a>
+</div>
+
+<!-- Логотип -->
+<div class="logo" id="logo">
+  <span class="ya">Я</span><span class="rest">ндекс</span>
+</div>
+
+<!-- Приветствие -->
+<div class="greeting" id="greeting">Доброе утро!</div>
+
+<!-- Поиск -->
+<div class="search-wrap">
+  <input id="q" type="text" placeholder="Найдётся всё" autofocus spellcheck="false" autocomplete="off">
+  <button id="go">Найти</button>
+  <div class="autocomplete" id="autocomplete"></div>
+</div>
+
+<!-- История -->
+<div class="history-box" id="historyBox" style="display:none;">
+  <div class="title">🕘 Последние запросы <span class="clear" id="clearHistory">очистить</span></div>
+  <div class="items" id="historyItems"></div>
+</div>
+
+<!-- Флаги -->
+<div class="flags">
+  <a class="flag" href="https://yandex.kz" target="_blank" title="Казахстан">
+    <svg viewBox="0 0 48 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="clipKZ"><rect width="48" height="32" rx="8" ry="8"/></clipPath></defs>
+      <g clip-path="url(#clipKZ)">
+        <rect width="48" height="32" fill="#00AFCA"/>
+        <g fill="#FEC50C">
+          <rect x="5" y="7" width="2" height="18" rx="0.6"/>
+          <rect x="9" y="7" width="2" height="18" rx="0.6"/>
+          <rect x="13" y="7" width="2" height="18" rx="0.6"/>
+        </g>
+        <g fill="#FEC50C" transform="translate(32, 16)">
+          <circle r="4.5"/>
+          <g stroke="#FEC50C" stroke-width="1.2" stroke-linecap="round">
+            <line x1="0" y1="-7.5" x2="0" y2="-10"/><line x1="0" y1="7.5" x2="0" y2="10"/>
+            <line x1="-7.5" y1="0" x2="-10" y2="0"/><line x1="7.5" y1="0" x2="10" y2="0"/>
+            <line x1="-5.3" y1="-5.3" x2="-7" y2="-7"/><line x1="5.3" y1="5.3" x2="7" y2="7"/>
+            <line x1="-5.3" y1="5.3" x2="-7" y2="7"/><line x1="5.3" y1="-5.3" x2="7" y2="-7"/>
+          </g>
+          <path d="M-7,-0.5 Q-3,-3 0,-0.5 Q3,-3 7,-0.5 Q3,1 0,2.5 Q-3,1 -7,-0.5 Z" fill="#00AFCA"/>
+        </g>
+      </g>
+    </svg>
+  </a>
+  <a class="flag" href="https://yandex.ru" target="_blank" title="Россия">
+    <svg viewBox="0 0 48 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="clipRU"><rect width="48" height="32" rx="8" ry="8"/></clipPath></defs>
+      <g clip-path="url(#clipRU)">
+        <rect width="48" height="10.67" fill="#FFFFFF"/>
+        <rect y="10.67" width="48" height="10.67" fill="#0039A6"/>
+        <rect y="21.34" width="48" height="10.66" fill="#D52B1E"/>
+      </g>
+    </svg>
+  </a>
+  <a class="flag" href="https://yandex.by" target="_blank" title="Беларусь">
+    <svg viewBox="0 0 48 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs><clipPath id="clipBY"><rect width="48" height="32" rx="8" ry="8"/></clipPath></defs>
+      <g clip-path="url(#clipBY)">
+        <rect width="48" height="21.34" fill="#D22730"/>
+        <rect y="21.34" width="48" height="10.66" fill="#00B04F"/>
+        <g fill="#FFFFFF">
+          <rect x="0" y="0" width="8" height="32" fill="#D22730"/>
+          <path d="M1.5,2 L3,5 L1.5,8 L5,6.5 L6.5,10 L5,13.5 L6.5,17 L5,20.5 L6.5,24 L5,27.5 L6.5,31 L1.5,29 L1.5,32 L3,29 L1.5,26 L3,23 L1.5,20 L3,17 L1.5,14 L3,11 L1.5,8 L3,5 Z" fill="#FFFFFF"/>
+        </g>
+      </g>
+    </svg>
+  </a>
+</div>
+
+<!-- Плитки -->
+<div class="quick">
+  <a href="https://mail.yandex.ru" target="_blank">
+    <div class="ico ico-mail">✉</div>Почта
+  </a>
+  <a href="https://yandex.ru/maps" target="_blank">
+    <div class="ico ico-maps">🗺</div>Карты
+  </a>
+  <a href="https://market.yandex.ru" target="_blank">
+    <div class="ico ico-market">🛒</div>Маркет
+  </a>
+  <a href="https://music.yandex.ru" target="_blank">
+    <div class="ico ico-music">♪</div>Музыка
+  </a>
+  <a href="https://yandex.ru/video" target="_blank">
+    <div class="ico ico-video">▶</div>Видео
+  </a>
+  <a href="https://yandex.ru/pogoda" target="_blank">
+    <div class="ico ico-weather">☀</div>Погода
+  </a>
+  <a href="https://dzen.ru" target="_blank">
+    <div class="ico ico-dzen">Д</div>Дзен
+  </a>
+  <a href="https://www.youtube.com" target="_blank">
+    <div class="ico ico-youtube">▶</div>YouTube
+  </a>
+  <a href="https://chatgpt.com" target="_blank">
+    <div class="ico ico-gpt">AI</div>ChatGPT
+  </a>
+  <a href="https://chat.deepseek.com" target="_blank">
+    <div class="ico ico-deepseek">🐋</div>DeepSeek
+  </a>
+</div>
+
+<!-- Факт дня -->
+<div class="fact-box" id="factBox">
+  <div class="label">💡 Факт дня</div>
+  <div id="factText">Загрузка...</div>
+</div>
+
+<!-- Панель настроек -->
+<div class="settings-panel" id="settingsPanel">
+  <h2>⚙ Настройки <button class="close-btn" id="closeSettings" title="Закрыть">✕</button></h2>
+
+  <div class="row">
+    <label>Логотип и поисковик</label>
+    <select id="setLogo">
+      <option value="yandex">Яндекс</option>
+      <option value="google">Google</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Тема</label>
+    <select id="setTheme">
+      <option value="light">Светлая</option>
+      <option value="dark">Тёмная</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Показывать факт дня</label>
+    <select id="setFact">
+      <option value="yes">Да</option>
+      <option value="no">Нет</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Показывать историю</label>
+    <select id="setHistory">
+      <option value="yes">Да</option>
+      <option value="no">Нет</option>
+    </select>
+  </div>
+
+  <div class="row" style="border:none; margin-top:20px; flex-direction:column; align-items:stretch; gap:10px;">
+    <button style="background:#ff3f40; color:#fff; padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:600;"
+            id="resetAll">🗑 Сбросить всё</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// ХРАНИЛИЩЕ
+// ============================================================
+const LS = {
+  get: (k, def) => {
+    try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); }
+    catch { return def; }
+  },
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
+};
+
+// ============================================================
+// ЧАСЫ + ЧАСОВЫЕ ПОЯСА
+// ============================================================
+const clockTime = document.getElementById('clockTime');
+const clockDate = document.getElementById('clockDate');
+const tzSelect = document.getElementById('tzSelect');
+tzSelect.value = LS.get('tz', 'Europe/Moscow');
+
+function updateClock() {
+  const now = new Date();
+  const tz = tzSelect.value;
+  const fmt = new Intl.DateTimeFormat('ru-RU', {
+    timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+  });
+  clockTime.textContent = fmt.format(now);
+
+  const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+    timeZone: tz, weekday: 'short', day: 'numeric', month: 'long'
+  });
+  const parts = dateFmt.formatToParts(now);
+  const get = t => parts.find(p => p.type === t)?.value || '';
+  clockDate.textContent = `${get('weekday')}, ${get('day')} ${get('month')}`;
+}
+updateClock();
+setInterval(updateClock, 1000);
+tzSelect.addEventListener('change', () => {
+  LS.set('tz', tzSelect.value);
+  updateClock();
+});
+
+// ============================================================
+// ПРИВЕТСТВИЕ
+// ============================================================
+function updateGreeting() {
+  const h = new Date().getHours();
+  let g = 'Доброй ночи!';
+  if (h >= 5 && h < 12) g = 'Доброе утро!';
+  else if (h >= 12 && h < 18) g = 'Добрый день!';
+  else if (h >= 18 && h < 23) g = 'Добрый вечер!';
+  document.getElementById('greeting').textContent = g;
+}
+updateGreeting();
+
+// ============================================================
+// ТЁМНАЯ ТЕМА
+// ============================================================
+const themeBtn = document.getElementById('themeBtn');
+function applyTheme(theme) {
+  document.body.classList.toggle('dark', theme === 'dark');
+  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  document.getElementById('setTheme').value = theme;
+}
+applyTheme(LS.get('theme', 'light'));
+themeBtn.addEventListener('click', () => {
+  const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+  LS.set('theme', next);
+  applyTheme(next);
+});
+
+// ============================================================
+// ЛОГОТИП = ПОИСКОВИК (с плавной сменой + смена цвета)
+// ============================================================
+const ENGINES = {
+  yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
+  google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) }
+};
+
+const logoEl = document.getElementById('logo');
+
+setTimeout(() => {
+  logoEl.style.animation = 'none';
+}, 900);
+
+function setLogoContent(type) {
+  if (type === 'google') {
+    logoEl.innerHTML = '<span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span>';
+  } else {
+    logoEl.innerHTML = '<span class="ya">Я</span><span class="rest">ндекс</span>';
+  }
+  logoEl.style.fontSize = '72px';
+}
+
+function applyLogo(type, animate = false) {
+  document.body.classList.toggle('google', type === 'google');
+
+  if (animate) {
+    logoEl.classList.add('switching');
+    setTimeout(() => {
+      setLogoContent(type);
+      logoEl.classList.remove('switching');
+    }, 450);
+  } else {
+    setLogoContent(type);
+  }
+}
+
+applyLogo(LS.get('logoType', 'yandex'), false);
+
+document.getElementById('setLogo').value = LS.get('logoType', 'yandex');
+document.getElementById('setLogo').addEventListener('change', e => {
+  LS.set('logoType', e.target.value);
+  applyLogo(e.target.value, true);
+});
+
+// ============================================================
+// ПОИСК + АВТОДОПОЛНЕНИЕ + ИСТОРИЯ
+// ============================================================
+const q = document.getElementById('q');
+const go = document.getElementById('go');
+const autocompleteEl = document.getElementById('autocomplete');
+
+function getHistory() { return LS.get('history', []); }
+function addHistory(text) {
+  let h = getHistory().filter(x => x !== text);
+  h.unshift(text);
+  h = h.slice(0, 10);
+  LS.set('history', h);
+  renderHistory();
+}
+function renderHistory() {
+  const box = document.getElementById('historyBox');
+  const items = document.getElementById('historyItems');
+  const show = LS.get('showHistory', true);
+  const h = getHistory();
+  if (!show || h.length === 0) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  items.innerHTML = '';
+  h.forEach(text => {
+    const a = document.createElement('a');
+    a.href = '#';
+    a.textContent = text;
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      q.value = text;
+      doSearch();
+    });
+    items.appendChild(a);
+  });
+}
+renderHistory();
+
+document.getElementById('clearHistory').addEventListener('click', () => {
+  LS.set('history', []);
+  renderHistory();
+});
+
+function doSearch() {
+  const text = q.value.trim();
+  if (!text) { q.focus(); return; }
+  addHistory(text);
+  const engine = LS.get('logoType', 'yandex');
+  const url = ENGINES[engine].url(text);
+  window.open(url, '_blank');
+  hideAutocomplete();
+}
+
+go.addEventListener('click', doSearch);
+q.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+  else if (e.key === 'Escape') hideAutocomplete();
+});
+
+function showAutocomplete() {
+  const val = q.value.trim().toLowerCase();
+  const h = getHistory();
+  if (!val) { hideAutocomplete(); return; }
+  const matches = h.filter(x => x.toLowerCase().includes(val) && x.toLowerCase() !== val).slice(0, 6);
+  if (matches.length === 0) { hideAutocomplete(); return; }
+  autocompleteEl.innerHTML = '';
+  matches.forEach(m => {
+    const d = document.createElement('div');
+    d.className = 'item';
+    d.innerHTML = `<span class="ico">🕘</span>${m}`;
+    d.addEventListener('click', () => {
+      q.value = m;
+      doSearch();
+    });
+    autocompleteEl.appendChild(d);
+  });
+  autocompleteEl.classList.add('show');
+}
+function hideAutocomplete() { autocompleteEl.classList.remove('show'); }
+q.addEventListener('input', showAutocomplete);
+q.addEventListener('focus', showAutocomplete);
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) hideAutocomplete();
+});
+
+// ============================================================
+// ФАКТ И ЦИТАТА ДНЯ (обновление каждую минуту)
+// ============================================================
+const FACTS = [
+  'Мёд не портится — археологи находили съедобный мёд в гробницах возрастом 3000 лет.',
+  'У осьминога три сердца и голубая кровь.',
+  'Бананы — это ягоды, а малина — нет.',
+  'Венера вращается в обратную сторону по сравнению с другими планетами.',
+  'Улитка может спать три года подряд.',
+  'Сердце синего кита размером с небольшой автомобиль.',
+  'Молния в 5 раз горячее поверхности Солнца.',
+  'Пингвины делают предложение руки и сердца, даря камешек.',
+  'Человеческий нос различает более 1 триллиона запахов.',
+  'Страусы не прячут голову в песок — это миф.',
+  'Молоко бегемота — розового цвета.',
+  'Кошки не чувствуют сладкого вкуса.',
+  'Первая веб-камера была создана, чтобы следить за кофеваркой в Кембридже.',
+  'Первый компьютерный вирус появился в 1971 году и назывался Creeper.',
+  'Слово «Яндекс» появилось в 1993 году — тогда это была поисковая программа.',
+  'Хакеры в 1980-х использовали свисток из игрушки для обхода телефонных сетей.',
+  'Самый быстрый суперкомпьютер в мире выполняет более 1 квинтиллиона операций в секунду.'
+];
+
+const QUOTES = [
+  '«Единственный способ делать великую работу — любить то, что делаешь.» — Стив Джобс',
+  '«Не бойтесь медленно идти, бойтесь стоять на месте.» — китайская пословица',
+  '«Всё, что нас не убивает, делает нас сильнее.» — Фридрих Ницше',
+  '«Успех — это способность идти от неудачи к неудаче, не теряя энтузиазма.» — Уинстон Черчилль',
+  '«Лучший способ предсказать будущее — создать его.» — Питер Друкер',
+  '«Дисциплина — это мост между целью и её достижением.» — Джим Рон',
+  '«Если ты не можешь объяснить это просто, значит, ты сам не понимаешь.» — Альберт Эйнштейн',
+  '«Не откладывай на завтра то, что можно сделать сегодня.» — Бенджамин Франклин',
+  '«Тот, кто хочет — ищет возможности, кто не хочет — ищет причины.» — Сократ'
+];
+
+function renderFact() {
+  const show = LS.get('showFact', true);
+  const box = document.getElementById('factBox');
+  if (!show) { box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  const idx = Math.floor(Date.now() / 60000);
+  const fact = FACTS[idx % FACTS.length];
+  const quote = QUOTES[idx % QUOTES.length];
+  document.getElementById('factText').innerHTML =
+    `<b>${fact}</b><br><br><span style="color:#888; font-style:italic;">${quote}</span>`;
+}
+renderFact();
+setInterval(renderFact, 60000);
+
+// ============================================================
+// ПАНЕЛЬ НАСТРОЕК
+// ============================================================
+const settingsPanel = document.getElementById('settingsPanel');
+function openSettings() { settingsPanel.classList.add('show'); }
+function closeSettings() { settingsPanel.classList.remove('show'); }
+
+document.getElementById('settingsBtn').addEventListener('click', openSettings);
+document.getElementById('closeSettings').addEventListener('click', closeSettings);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSettings();
+});
+
+// Тема в настройках
+document.getElementById('setTheme').value = LS.get('theme', 'light');
+document.getElementById('setTheme').addEventListener('change', e => {
+  LS.set('theme', e.target.value);
+  applyTheme(e.target.value);
+});
+
+// Факт дня
+document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
+document.getElementById('setFact').addEventListener('change', e => {
+  LS.set('showFact', e.target.value === 'yes');
+  renderFact();
+});
+
+// История
+document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
+document.getElementById('setHistory').addEventListener('change', e => {
+  LS.set('showHistory', e.target.value === 'yes');
+  renderHistory();
+});
+
+// Сброс
+document.getElementById('resetAll').addEventListener('click', () => {
+  if (confirm('Сбросить все настройки?')) {
+    localStorage.clear();
+    location.reload();
+  }
+});
+</script>
+</body>
+</html>
