@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#fc3f1d">
 <title>Моя стартовая</title>
 <style>
   @property --angle {
@@ -57,8 +59,6 @@
     0%   { opacity: 0; transform: translateY(-20px); }
     100% { opacity: 1; transform: translateY(0); }
   }
-
-  /* Радужное вращение рамки */
   @keyframes spin {
     to { --angle: 360deg; }
   }
@@ -90,7 +90,6 @@
     transition: color 0.5s ease;
   }
 
-  /* Контейнер поиска */
   .search-wrap {
     display: flex;
     width: 100%;
@@ -130,7 +129,7 @@
   }
   #go:hover { background: var(--accent-dark); }
 
-  /* ============ РАДУЖНАЯ РАМКА ДЛЯ GOOGLE ============ */
+  /* Радужная рамка для Google */
   body.google .search-wrap {
     border: none;
     padding: 3px;
@@ -139,7 +138,6 @@
     border-radius: 13px;
     animation: searchSlide 0.7s 0.15s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
-
   body.google .search-wrap::before {
     content: '';
     position: absolute;
@@ -147,16 +145,11 @@
     border-radius: 13px;
     background: conic-gradient(
       from var(--angle),
-      #4285f4,
-      #ea4335,
-      #fbbc05,
-      #34a853,
-      #4285f4
+      #4285f4, #ea4335, #fbbc05, #34a853, #4285f4
     );
     animation: spin 4s linear infinite;
     z-index: 0;
   }
-
   body.google .search-wrap::after {
     content: '';
     position: absolute;
@@ -166,21 +159,12 @@
     z-index: 1;
     transition: background 0.5s ease;
   }
-
-  body.dark.google .search-wrap::after {
-    background: #1a1a2e;
-  }
-
-  body.google #q,
-  body.google #go {
+  body.dark.google .search-wrap::after { background: #1a1a2e; }
+  body.google #q, body.google #go {
     position: relative;
     z-index: 2;
   }
-
-  body.google .search-wrap:focus-within {
-    box-shadow: none;
-  }
-
+  body.google .search-wrap:focus-within { box-shadow: none; }
   body.google .search-wrap:focus-within::before {
     box-shadow: 0 0 20px rgba(66, 133, 244, 0.4);
   }
@@ -208,22 +192,6 @@
     border-radius: 0 0 12px 12px;
     margin-top: 3px;
     padding: 2px;
-  }
-  body.google .autocomplete::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 0 0 12px 12px;
-    background: conic-gradient(
-      from var(--angle),
-      #4285f4,
-      #ea4335,
-      #fbbc05,
-      #34a853,
-      #4285f4
-    );
-    animation: spin 4s linear infinite;
-    z-index: -1;
   }
   body.dark .autocomplete { background: #1a1a2e; }
   .autocomplete.show { display: block; }
@@ -275,7 +243,6 @@
   body.dark .settings-panel .row { border-color: #333; }
   body.dark .settings-panel .row select { background: #0f0f1e; color: #fff; border-color: #333; }
 
-  /* Кнопки */
   .tools {
     position: absolute;
     top: 16px;
@@ -315,7 +282,6 @@
   }
   .topbar a:hover { color: var(--accent); }
 
-  /* Часы */
   .clock {
     position: absolute;
     top: 16px;
@@ -326,6 +292,7 @@
     font-size: 14px;
     color: #333;
     transition: color 0.5s ease;
+    flex-wrap: wrap;
   }
   .clock .time {
     font-size: 22px;
@@ -348,11 +315,6 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  @media (max-width: 900px) {
-    .clock, .topbar { position: static; margin: 4px; }
-  }
-
-  /* Флаги */
   .flags {
     margin-top: 22px;
     display: flex;
@@ -380,7 +342,6 @@
   }
   .flag svg { width: 100%; height: 100%; display: block; }
 
-  /* Плитки */
   .quick {
     margin-top: 30px;
     display: grid;
@@ -438,7 +399,6 @@
   .ico-gpt     { background: #10a37f; }
   .ico-deepseek{ background: #4d6bfe; }
 
-  /* История */
   .history-box {
     margin-top: 20px;
     max-width: 700px;
@@ -483,7 +443,6 @@
     text-decoration: underline;
   }
 
-  /* Факт дня */
   .fact-box {
     margin-top: 20px;
     max-width: 700px;
@@ -507,7 +466,6 @@
     transition: color 0.5s ease;
   }
 
-  /* Панель настроек */
   .settings-panel {
     position: fixed;
     top: 0;
@@ -571,23 +529,143 @@
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
 
-  @media (max-width: 700px) {
-    .logo { font-size: 52px; }
-    .quick { grid-template-columns: repeat(3, 1fr); max-width: 400px; }
-    .topbar { gap: 12px; font-size: 12px; }
-    .settings-panel { width: 100%; }
+  /* ============================================================
+     МОБИЛЬНАЯ ВЕРСИЯ
+     ============================================================ */
+
+  @media (max-width: 900px) {
+    body {
+      justify-content: flex-start;
+      padding: 16px;
+      padding-top: 20px;
+    }
+
+    .tools {
+      position: static;
+      order: 0;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .tool-btn { width: 40px; height: 40px; font-size: 17px; }
+
+    .clock {
+      position: static;
+      order: 1;
+      margin-bottom: 8px;
+      font-size: 13px;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .clock .time { font-size: 20px; }
+    .clock .tz { font-size: 11px; padding: 3px 6px; }
+
+    .topbar {
+      position: static;
+      order: 2;
+      margin-bottom: 16px;
+      font-size: 13px;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .logo { font-size: 56px; margin-bottom: 12px; }
+    .greeting { font-size: 17px; margin-bottom: 14px; }
+
+    .search-wrap { height: 48px; }
+    #q { font-size: 16px; padding: 0 14px; }
+    #go { font-size: 15px; padding: 0 20px; }
+
+    .flags { gap: 12px; margin-top: 16px; }
+    .flag { width: 42px; height: 28px; }
+
+    .quick {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      max-width: 100%;
+      margin-top: 20px;
+    }
+    .quick a { font-size: 12px; padding: 10px 2px; }
+    .quick .ico { width: 44px; height: 44px; font-size: 20px; }
+
+    .fact-box {
+      font-size: 13px;
+      padding: 12px 14px;
+      margin-top: 16px;
+    }
+
+    .history-box { padding: 10px 12px; font-size: 12px; }
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+
+    .clock { font-size: 12px; gap: 6px; }
+    .clock .time { font-size: 18px; }
+    .clock .date { font-size: 12px; }
+
+    .topbar { font-size: 12px; gap: 10px; margin-bottom: 12px; }
+
+    .tool-btn { width: 36px; height: 36px; font-size: 15px; }
+
+    .logo { font-size: 42px; letter-spacing: -2px; margin-bottom: 10px; }
+    .greeting { font-size: 15px; margin-bottom: 12px; }
+
+    .search-wrap { height: 44px; border-radius: 10px; }
+    #q { font-size: 15px; padding: 0 12px; }
+    #go { font-size: 14px; padding: 0 16px; }
+
+    .flags { gap: 10px; margin-top: 14px; }
+    .flag { width: 38px; height: 25px; border-radius: 6px; }
+
+    .quick {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 16px;
+    }
+    .quick a { font-size: 11px; padding: 8px 2px; gap: 6px; }
+    .quick .ico { width: 40px; height: 40px; font-size: 18px; }
+
+    .fact-box {
+      font-size: 12px;
+      padding: 10px 12px;
+      line-height: 1.4;
+      margin-top: 14px;
+    }
+    .fact-box .label { font-size: 10px; }
+
+    .history-box { padding: 8px 10px; font-size: 11px; }
+
+    .settings-panel { width: 100%; max-width: 100%; padding: 18px; }
+    .settings-panel h2 { font-size: 18px; margin-bottom: 14px; }
+    .settings-panel .row { font-size: 13px; padding: 12px 0; }
+    .settings-panel .row select { font-size: 13px; max-width: 130px; }
+  }
+
+  @media (max-width: 380px) {
+    .logo { font-size: 36px; }
+    .quick { grid-template-columns: repeat(3, 1fr); }
+    .quick .ico { width: 36px; height: 36px; font-size: 16px; }
+    .clock { font-size: 11px; }
+    .clock .time { font-size: 16px; }
+    .topbar { font-size: 11px; gap: 8px; }
+  }
+
+  @media (hover: none) {
+    .quick a:hover,
+    .flag:hover,
+    .tool-btn:hover { transform: none; }
   }
 </style>
 </head>
 <body>
 
-<!-- Кнопки -->
 <div class="tools">
   <button class="tool-btn" id="themeBtn" title="Тема">🌙</button>
   <button class="tool-btn" id="settingsBtn" title="Настройки">⚙</button>
 </div>
 
-<!-- Часы -->
 <div class="clock">
   <span class="time" id="clockTime">--:--:--</span>
   <span class="date" id="clockDate"></span>
@@ -620,28 +698,23 @@
   <a href="https://yandex.ru" target="_blank">Все сервисы</a>
 </div>
 
-<!-- Логотип -->
 <div class="logo" id="logo">
   <span class="ya">Я</span><span class="rest">ндекс</span>
 </div>
 
-<!-- Приветствие -->
 <div class="greeting" id="greeting">Доброе утро!</div>
 
-<!-- Поиск -->
 <div class="search-wrap">
   <input id="q" type="text" placeholder="Найдётся всё" autofocus spellcheck="false" autocomplete="off">
   <button id="go">Найти</button>
   <div class="autocomplete" id="autocomplete"></div>
 </div>
 
-<!-- История -->
 <div class="history-box" id="historyBox" style="display:none;">
   <div class="title">🕘 Последние запросы <span class="clear" id="clearHistory">очистить</span></div>
   <div class="items" id="historyItems"></div>
 </div>
 
-<!-- Флаги -->
 <div class="flags">
   <a class="flag" href="https://yandex.kz" target="_blank" title="Казахстан">
     <svg viewBox="0 0 48 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -691,47 +764,24 @@
   </a>
 </div>
 
-<!-- Плитки -->
 <div class="quick">
-  <a href="https://mail.yandex.ru" target="_blank">
-    <div class="ico ico-mail">✉</div>Почта
-  </a>
-  <a href="https://yandex.ru/maps" target="_blank">
-    <div class="ico ico-maps">🗺</div>Карты
-  </a>
-  <a href="https://market.yandex.ru" target="_blank">
-    <div class="ico ico-market">🛒</div>Маркет
-  </a>
-  <a href="https://music.yandex.ru" target="_blank">
-    <div class="ico ico-music">♪</div>Музыка
-  </a>
-  <a href="https://yandex.ru/video" target="_blank">
-    <div class="ico ico-video">▶</div>Видео
-  </a>
-  <a href="https://yandex.ru/pogoda" target="_blank">
-    <div class="ico ico-weather">☀</div>Погода
-  </a>
-  <a href="https://dzen.ru" target="_blank">
-    <div class="ico ico-dzen">Д</div>Дзен
-  </a>
-  <a href="https://www.youtube.com" target="_blank">
-    <div class="ico ico-youtube">▶</div>YouTube
-  </a>
-  <a href="https://chatgpt.com" target="_blank">
-    <div class="ico ico-gpt">AI</div>ChatGPT
-  </a>
-  <a href="https://chat.deepseek.com" target="_blank">
-    <div class="ico ico-deepseek">🐋</div>DeepSeek
-  </a>
+  <a href="https://mail.yandex.ru" target="_blank"><div class="ico ico-mail">✉</div>Почта</a>
+  <a href="https://yandex.ru/maps" target="_blank"><div class="ico ico-maps">🗺</div>Карты</a>
+  <a href="https://market.yandex.ru" target="_blank"><div class="ico ico-market">🛒</div>Маркет</a>
+  <a href="https://music.yandex.ru" target="_blank"><div class="ico ico-music">♪</div>Музыка</a>
+  <a href="https://yandex.ru/video" target="_blank"><div class="ico ico-video">▶</div>Видео</a>
+  <a href="https://yandex.ru/pogoda" target="_blank"><div class="ico ico-weather">☀</div>Погода</a>
+  <a href="https://dzen.ru" target="_blank"><div class="ico ico-dzen">Д</div>Дзен</a>
+  <a href="https://www.youtube.com" target="_blank"><div class="ico ico-youtube">▶</div>YouTube</a>
+  <a href="https://chatgpt.com" target="_blank"><div class="ico ico-gpt">AI</div>ChatGPT</a>
+  <a href="https://chat.deepseek.com" target="_blank"><div class="ico ico-deepseek">🐋</div>DeepSeek</a>
 </div>
 
-<!-- Факт дня -->
 <div class="fact-box" id="factBox">
   <div class="label">💡 Факт дня</div>
   <div id="factText">Загрузка...</div>
 </div>
 
-<!-- Панель настроек -->
 <div class="settings-panel" id="settingsPanel">
   <h2>⚙ Настройки <button class="close-btn" id="closeSettings" title="Закрыть">✕</button></h2>
 
@@ -774,9 +824,6 @@
 </div>
 
 <script>
-// ============================================================
-// ХРАНИЛИЩЕ
-// ============================================================
 const LS = {
   get: (k, def) => {
     try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); }
@@ -785,9 +832,7 @@ const LS = {
   set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
 };
 
-// ============================================================
 // ЧАСЫ + ЧАСОВЫЕ ПОЯСА
-// ============================================================
 const clockTime = document.getElementById('clockTime');
 const clockDate = document.getElementById('clockDate');
 const tzSelect = document.getElementById('tzSelect');
@@ -815,9 +860,7 @@ tzSelect.addEventListener('change', () => {
   updateClock();
 });
 
-// ============================================================
 // ПРИВЕТСТВИЕ
-// ============================================================
 function updateGreeting() {
   const h = new Date().getHours();
   let g = 'Доброй ночи!';
@@ -828,9 +871,7 @@ function updateGreeting() {
 }
 updateGreeting();
 
-// ============================================================
 // ТЁМНАЯ ТЕМА
-// ============================================================
 const themeBtn = document.getElementById('themeBtn');
 function applyTheme(theme) {
   document.body.classList.toggle('dark', theme === 'dark');
@@ -844,9 +885,7 @@ themeBtn.addEventListener('click', () => {
   applyTheme(next);
 });
 
-// ============================================================
-// ЛОГОТИП = ПОИСКОВИК (с плавной сменой + смена цвета)
-// ============================================================
+// ЛОГОТИП = ПОИСКОВИК
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
   google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) }
@@ -869,7 +908,6 @@ function setLogoContent(type) {
 
 function applyLogo(type, animate = false) {
   document.body.classList.toggle('google', type === 'google');
-
   if (animate) {
     logoEl.classList.add('switching');
     setTimeout(() => {
@@ -889,9 +927,7 @@ document.getElementById('setLogo').addEventListener('change', e => {
   applyLogo(e.target.value, true);
 });
 
-// ============================================================
 // ПОИСК + АВТОДОПОЛНЕНИЕ + ИСТОРИЯ
-// ============================================================
 const q = document.getElementById('q');
 const go = document.getElementById('go');
 const autocompleteEl = document.getElementById('autocomplete');
@@ -973,9 +1009,7 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.search-wrap')) hideAutocomplete();
 });
 
-// ============================================================
-// ФАКТ И ЦИТАТА ДНЯ (обновление каждую минуту)
-// ============================================================
+// ФАКТ И ЦИТАТА ДНЯ
 const FACTS = [
   'Мёд не портится — археологи находили съедобный мёд в гробницах возрастом 3000 лет.',
   'У осьминога три сердца и голубая кровь.',
@@ -1022,9 +1056,7 @@ function renderFact() {
 renderFact();
 setInterval(renderFact, 60000);
 
-// ============================================================
 // ПАНЕЛЬ НАСТРОЕК
-// ============================================================
 const settingsPanel = document.getElementById('settingsPanel');
 function openSettings() { settingsPanel.classList.add('show'); }
 function closeSettings() { settingsPanel.classList.remove('show'); }
@@ -1035,28 +1067,24 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSettings();
 });
 
-// Тема в настройках
 document.getElementById('setTheme').value = LS.get('theme', 'light');
 document.getElementById('setTheme').addEventListener('change', e => {
   LS.set('theme', e.target.value);
   applyTheme(e.target.value);
 });
 
-// Факт дня
 document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
 document.getElementById('setFact').addEventListener('change', e => {
   LS.set('showFact', e.target.value === 'yes');
   renderFact();
 });
 
-// История
 document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
 document.getElementById('setHistory').addEventListener('change', e => {
   LS.set('showHistory', e.target.value === 'yes');
   renderHistory();
 });
 
-// Сброс
 document.getElementById('resetAll').addEventListener('click', () => {
   if (confirm('Сбросить все настройки?')) {
     localStorage.clear();
