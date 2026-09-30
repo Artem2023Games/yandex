@@ -140,6 +140,47 @@
   }
   #go:hover { background: var(--accent-dark); }
 
+  /* Радужная рамка Яндекса (красная) */
+  body:not(.google) .search-wrap {
+    border: none;
+    padding: 3px;
+    background: transparent;
+    overflow: visible;
+    border-radius: 13px;
+  }
+  body:not(.google) .search-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 13px;
+    background: conic-gradient(
+      from var(--angle),
+      #fc3f1d, #ff7a00, #ff3f8e, #ff6b6b, #fc3f1d
+    );
+    animation: spin 4s linear infinite;
+    z-index: 0;
+  }
+  body:not(.google) .search-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border-radius: 10px;
+    background: #fff;
+    z-index: 1;
+    transition: background 0.5s ease;
+  }
+  body.dark:not(.google) .search-wrap::after { background: #1a1a2e; }
+  body:not(.google) #q,
+  body:not(.google) #go {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+  }
+  body:not(.google) .search-wrap:focus-within { box-shadow: none; }
+  body:not(.google) .search-wrap:focus-within::before {
+    box-shadow: 0 0 20px rgba(252, 63, 29, 0.4);
+  }
+
   /* Радужная рамка Google */
   body.google .search-wrap {
     border: none;
@@ -241,7 +282,6 @@
   body.dark .topbar a:hover { color: var(--accent); }
   body.dark .tool-btn { background: rgba(255,255,255,0.15); color: #fff; }
   body.dark .search-wrap { background: #1a1a2e; }
-  body.google.dark .search-wrap { background: transparent; }
   body.dark .clock .tz { background: rgba(255,255,255,0.1); color: #fff; }
   body.dark .fact-box { background: rgba(255,255,255,0.05); color: #ccc; }
   body.dark .history-box { background: rgba(255,255,255,0.05); }
@@ -323,13 +363,31 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
+  /* ============================================================
+     ФЛАГИ — плавно исчезают при Google
+     ============================================================ */
   .flags {
     margin-top: 22px;
     display: flex;
     gap: 16px;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.35s ease,
+                transform 0.35s ease,
+                max-height 0.4s ease,
+                margin-top 0.4s ease;
+    opacity: 1;
+    max-height: 100px;
+    overflow: hidden;
   }
+  body.google .flags {
+    opacity: 0;
+    transform: scale(0.7);
+    max-height: 0;
+    margin-top: 0;
+    pointer-events: none;
+  }
+
   .flag {
     width: 48px;
     height: 32px;
@@ -341,6 +399,7 @@
     display: block;
     overflow: hidden;
     animation: flagsDrop 0.6s 0.4s both;
+    flex-shrink: 0;
   }
   .flag:nth-child(2) { animation-delay: 0.5s; }
   .flag:nth-child(3) { animation-delay: 0.6s; }
@@ -350,6 +409,7 @@
   }
   .flag svg { width: 100%; height: 100%; display: block; }
 
+  /* Плитки */
   .quick {
     margin-top: 30px;
     display: grid;
@@ -590,12 +650,12 @@
 
     .quick {
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
+      gap: 12px;
       max-width: 100%;
       margin-top: 20px;
     }
-    .quick a { font-size: 12px; padding: 10px 2px; }
-    .quick .ico { width: 44px; height: 44px; font-size: 20px; }
+    .quick a { font-size: 13px; padding: 12px 4px; gap: 8px; }
+    .quick .ico { width: 54px; height: 54px; font-size: 26px; }
 
     .fact-box {
       font-size: 13px;
@@ -620,7 +680,7 @@
     .logo { font-size: 42px; letter-spacing: -2px; margin-bottom: 10px; }
     .greeting { font-size: 15px; margin-bottom: 12px; }
 
-    /* Поиск на телефоне */
+    /* Поиск */
     .search-wrap {
       height: 46px;
       min-height: 46px;
@@ -646,7 +706,8 @@
       line-height: 1;
     }
 
-    /* Радужная рамка Google */
+    /* Радужные рамки на мобильном */
+    body:not(.google) .search-wrap,
     body.google .search-wrap {
       padding: 2px;
       border-radius: 11px;
@@ -654,25 +715,33 @@
       height: 46px;
       min-height: 46px;
     }
+    body:not(.google) .search-wrap::before,
     body.google .search-wrap::before {
       border-radius: 11px;
       inset: 0;
     }
+    body:not(.google) .search-wrap::after,
     body.google .search-wrap::after {
       inset: 2px;
       border-radius: 9px;
     }
 
     .flags { gap: 10px; margin-top: 14px; }
-    .flag { width: 38px; height: 25px; border-radius: 6px; }
+    .flag { width: 42px; height: 28px; border-radius: 7px; }
 
+    /* Крупные иконки */
     .quick {
       grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      margin-top: 16px;
+      gap: 10px;
+      margin-top: 18px;
     }
-    .quick a { font-size: 11px; padding: 8px 2px; gap: 6px; }
-    .quick .ico { width: 40px; height: 40px; font-size: 18px; }
+    .quick a { font-size: 13px; padding: 12px 4px; gap: 10px; }
+    .quick .ico {
+      width: 60px;
+      height: 60px;
+      font-size: 30px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+    }
 
     .fact-box {
       font-size: 12px;
@@ -692,8 +761,9 @@
 
   @media (max-width: 380px) {
     .logo { font-size: 36px; }
-    .quick { grid-template-columns: repeat(3, 1fr); }
-    .quick .ico { width: 36px; height: 36px; font-size: 16px; }
+    .quick { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .quick .ico { width: 52px; height: 52px; font-size: 26px; }
+    .quick a { font-size: 12px; gap: 8px; }
     .clock { font-size: 11px; }
     .clock .time { font-size: 16px; }
     .topbar { font-size: 11px; gap: 8px; }
@@ -702,6 +772,7 @@
     #q { font-size: 13px; padding: 0 8px; height: 100%; }
     #go { font-size: 12px; padding: 0 10px; }
 
+    body:not(.google) .search-wrap,
     body.google .search-wrap { height: 42px; min-height: 42px; }
   }
 
