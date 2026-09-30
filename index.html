@@ -140,7 +140,7 @@
   }
   #go:hover { background: var(--accent-dark); }
 
-  /* Радужная рамка Яндекса (красная) */
+  /* Радужная рамка Яндекса */
   body:not(.google) .search-wrap {
     border: none;
     padding: 3px;
@@ -363,29 +363,17 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  /* ============================================================
-     ФЛАГИ — плавно исчезают при Google
-     ============================================================ */
+  /* ФЛАГИ — управление через display */
   .flags {
     margin-top: 22px;
     display: flex;
     gap: 16px;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.35s ease,
-                transform 0.35s ease,
-                max-height 0.4s ease,
-                margin-top 0.4s ease;
-    opacity: 1;
-    max-height: 100px;
-    overflow: hidden;
+    transition: opacity 0.35s ease;
   }
-  body.google .flags {
-    opacity: 0;
-    transform: scale(0.7);
-    max-height: 0;
-    margin-top: 0;
-    pointer-events: none;
+  .flags.hidden {
+    display: none;
   }
 
   .flag {
@@ -680,7 +668,6 @@
     .logo { font-size: 42px; letter-spacing: -2px; margin-bottom: 10px; }
     .greeting { font-size: 15px; margin-bottom: 12px; }
 
-    /* Поиск */
     .search-wrap {
       height: 46px;
       min-height: 46px;
@@ -706,7 +693,6 @@
       line-height: 1;
     }
 
-    /* Радужные рамки на мобильном */
     body:not(.google) .search-wrap,
     body.google .search-wrap {
       padding: 2px;
@@ -729,7 +715,6 @@
     .flags { gap: 10px; margin-top: 14px; }
     .flag { width: 42px; height: 28px; border-radius: 7px; }
 
-    /* Крупные иконки */
     .quick {
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
@@ -839,7 +824,7 @@
   <div class="items" id="historyItems"></div>
 </div>
 
-<div class="flags">
+<div class="flags" id="flagsBlock">
   <a class="flag" href="https://yandex.kz" target="_blank" title="Казахстан">
     <svg viewBox="0 0 48 32" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs><clipPath id="clipKZ"><rect width="48" height="32" rx="8" ry="8"/></clipPath></defs>
@@ -1009,13 +994,14 @@ themeBtn.addEventListener('click', () => {
   applyTheme(next);
 });
 
-// ЛОГОТИП
+// ЛОГОТИП + ФЛАГИ (через JS)
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
   google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) }
 };
 
 const logoEl = document.getElementById('logo');
+const flagsBlock = document.getElementById('flagsBlock');
 
 setTimeout(() => {
   logoEl.style.animation = 'none';
@@ -1030,8 +1016,19 @@ function setLogoContent(type) {
   logoEl.style.fontSize = '72px';
 }
 
+// Показываем/скрываем флаги через JS — работает везде
+function toggleFlags(type) {
+  if (type === 'google') {
+    flagsBlock.classList.add('hidden');
+  } else {
+    flagsBlock.classList.remove('hidden');
+  }
+}
+
 function applyLogo(type, animate = false) {
   document.body.classList.toggle('google', type === 'google');
+  toggleFlags(type);
+
   if (animate) {
     logoEl.classList.add('switching');
     setTimeout(() => {
