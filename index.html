@@ -591,9 +591,7 @@
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
 
-  /* ============================================================
-     ПЛАВНАЯ СМЕНА ЯЗЫКА
-     ============================================================ */
+  /* ПЛАВНАЯ СМЕНА ЯЗЫКА */
   body.lang-changing .greeting,
   body.lang-changing .topbar a,
   body.lang-changing #go,
@@ -1012,6 +1010,24 @@ const TRANSLATIONS = {
 };
 
 // ============================================================
+// МЕСЯЦЫ И ДНИ (жёстко прописаны — не зависит от локали браузера)
+// ============================================================
+const DATE_LOCALE = {
+  ru: {
+    months: ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'],
+    days: ['вс','пн','вт','ср','чт','пт','сб']
+  },
+  kz: {
+    months: ['қаңтар','ақпан','наурыз','сәуір','мамыр','маусым','шілде','тамыз','қыркүйек','қазан','қараша','желтоқсан'],
+    days: ['жс','дс','сс','ср','бс','жм','сб']
+  },
+  en: {
+    months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    days: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+  }
+};
+
+// ============================================================
 // ЧАСОВЫЕ ПОЯСА
 // ============================================================
 const TIMEZONES = [
@@ -1059,7 +1075,6 @@ function renderTimezones() {
 // ПЛАВНАЯ СМЕНА ЯЗЫКА
 // ============================================================
 function applyLanguage(lang, animate = true) {
-  // Если язык тот же — ничего не делаем (кроме первой инициализации)
   if (lang === currentLang && animate) return;
 
   const doChange = () => {
@@ -1093,11 +1108,9 @@ function applyLanguage(lang, animate = true) {
   };
 
   if (animate) {
-    // Плавное исчезновение
     document.body.classList.add('lang-changing');
     setTimeout(() => {
       doChange();
-      // Небольшая пауза, потом плавное появление
       setTimeout(() => {
         document.body.classList.remove('lang-changing');
       }, 60);
@@ -1128,17 +1141,26 @@ const tzSelect = document.getElementById('tzSelect');
 function updateClock() {
   const now = new Date();
   const tz = tzSelect.value || 'Europe/Moscow';
-  const fmt = new Intl.DateTimeFormat(TRANSLATIONS[currentLang].locale, {
+
+  // Время — цифры одинаковые во всех языках, Intl работает надёжно
+  const fmt = new Intl.DateTimeFormat('ru-RU', {
     timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
   });
   clockTime.textContent = fmt.format(now);
 
-  const dateFmt = new Intl.DateTimeFormat(TRANSLATIONS[currentLang].locale, {
-    timeZone: tz, weekday: 'short', day: 'numeric', month: 'long'
-  });
-  const parts = dateFmt.formatToParts(now);
-  const get = t => parts.find(p => p.type === t)?.value || '';
-  clockDate.textContent = `${get('weekday')}, ${get('day')} ${get('month')}`;
+  // Дата — из своих массивов, чтобы не было "M10"
+  const localDate = new Date(now.toLocaleString('en-US', { timeZone: tz }));
+  const dayName = DATE_LOCALE[currentLang].days[localDate.getDay()];
+  const dayNum = localDate.getDate();
+  const monthName = DATE_LOCALE[currentLang].months[localDate.getMonth()];
+
+  if (currentLang === 'en') {
+    clockDate.textContent = `${dayName}, ${monthName} ${dayNum}`;
+  } else if (currentLang === 'kz') {
+    clockDate.textContent = `${dayNum} ${monthName}, ${dayName}`;
+  } else {
+    clockDate.textContent = `${dayName}, ${dayNum} ${monthName}`;
+  }
 }
 
 // ============================================================
@@ -1371,7 +1393,7 @@ function closeSettings() { settingsPanel.classList.remove('show'); }
 // ============================================================
 function init() {
   const savedLang = LS.get('lang', 'ru');
-  applyLanguage(savedLang, false); // без анимации при первой загрузке
+  applyLanguage(savedLang, false);
 
   applyTheme(LS.get('theme', 'light'));
   themeBtn.addEventListener('click', () => {
