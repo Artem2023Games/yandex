@@ -140,7 +140,6 @@
   }
   #go:hover { background: var(--accent-dark); }
 
-  /* Радужная рамка Яндекса */
   body:not(.google) .search-wrap {
     border: none;
     padding: 3px;
@@ -181,7 +180,6 @@
     box-shadow: 0 0 20px rgba(252, 63, 29, 0.4);
   }
 
-  /* Радужная рамка Google */
   body.google .search-wrap {
     border: none;
     padding: 3px;
@@ -221,7 +219,6 @@
     box-shadow: 0 0 20px rgba(66, 133, 244, 0.4);
   }
 
-  /* Автодополнение */
   .autocomplete {
     position: absolute;
     top: 100%;
@@ -268,7 +265,6 @@
   }
   .autocomplete .item .ico { color: #999; font-size: 14px; }
 
-  /* Тёмная тема */
   body.dark { background: #0f0f1e; color: #eee; }
   body.dark .topbar a, body.dark .clock { color: #bbb; }
   body.dark .clock .time { color: #fff; }
@@ -290,7 +286,6 @@
   body.dark .settings-panel .row { border-color: #333; }
   body.dark .settings-panel .row select { background: #0f0f1e; color: #fff; border-color: #333; }
 
-  /* Кнопки */
   .tools {
     position: absolute;
     top: 16px;
@@ -363,7 +358,6 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  /* ФЛАГИ — управление через display */
   .flags {
     margin-top: 22px;
     display: flex;
@@ -372,9 +366,7 @@
     align-items: center;
     transition: opacity 0.35s ease;
   }
-  .flags.hidden {
-    display: none;
-  }
+  .flags.hidden { display: none; }
 
   .flag {
     width: 48px;
@@ -397,7 +389,6 @@
   }
   .flag svg { width: 100%; height: 100%; display: block; }
 
-  /* Плитки */
   .quick {
     margin-top: 30px;
     display: grid;
@@ -584,10 +575,6 @@
     transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
-
-  /* ============================================================
-     МОБИЛЬНАЯ ВЕРСИЯ
-     ============================================================ */
 
   @media (max-width: 900px) {
     body {
@@ -778,49 +765,33 @@
 <div class="clock">
   <span class="time" id="clockTime">--:--:--</span>
   <span class="date" id="clockDate"></span>
-  <select class="tz" id="tzSelect" title="Часовой пояс">
-    <option value="Europe/Moscow">🇷🇺 Москва</option>
-    <option value="Europe/Kaliningrad">🇷🇺 Калининград</option>
-    <option value="Europe/Samara">🇷🇺 Самара</option>
-    <option value="Asia/Yekaterinburg">🇷🇺 Екатеринбург</option>
-    <option value="Asia/Omsk">🇷🇺 Омск</option>
-    <option value="Asia/Krasnoyarsk">🇷🇺 Красноярск</option>
-    <option value="Asia/Irkutsk">🇷🇺 Иркутск</option>
-    <option value="Asia/Yakutsk">🇷🇺 Якутск</option>
-    <option value="Asia/Vladivostok">🇷🇺 Владивосток</option>
-    <option value="Asia/Magadan">🇷🇺 Магадан</option>
-    <option value="Asia/Kamchatka">🇷🇺 Камчатка</option>
-    <option value="Europe/Minsk">🇧🇾 Минск</option>
-    <option value="Asia/Almaty">🇰🇿 Алматы</option>
-    <option value="Asia/Astana">🇰🇿 Астана</option>
-    <option value="Asia/Aqtobe">🇰🇿 Актобе</option>
-    <option value="Asia/Atyrau">🇰🇿 Атырау</option>
-    <option value="Asia/Oral">🇰🇿 Уральск</option>
-    <option value="Asia/Qyzylorda">🇰🇿 Кызылорда</option>
-  </select>
+  <select class="tz" id="tzSelect" title="Часовой пояс"></select>
 </div>
 
 <div class="topbar">
-  <a href="https://mail.yandex.ru" target="_blank">Почта</a>
-  <a href="https://yandex.ru/news" target="_blank">Новости</a>
-  <a href="https://yandex.ru/maps" target="_blank">Карты</a>
-  <a href="https://yandex.ru" target="_blank">Все сервисы</a>
+  <a href="https://mail.yandex.ru" target="_blank" data-i18n="mail">Почта</a>
+  <a href="https://yandex.ru/news" target="_blank" data-i18n="news">Новости</a>
+  <a href="https://yandex.ru/maps" target="_blank" data-i18n="maps">Карты</a>
+  <a href="https://yandex.ru" target="_blank" data-i18n="allServices">Все сервисы</a>
 </div>
 
 <div class="logo" id="logo">
   <span class="ya">Я</span><span class="rest">ндекс</span>
 </div>
 
-<div class="greeting" id="greeting">Доброе утро!</div>
+<div class="greeting" id="greeting" data-i18n="greeting">Доброе утро!</div>
 
 <div class="search-wrap">
-  <input id="q" type="text" placeholder="Найдётся всё" spellcheck="false" autocomplete="off">
-  <button id="go">Найти</button>
+  <input id="q" type="text" placeholder="Найдётся всё" spellcheck="false" autocomplete="off" data-i18n-placeholder="searchPlaceholder">
+  <button id="go" data-i18n="searchBtn">Найти</button>
   <div class="autocomplete" id="autocomplete"></div>
 </div>
 
 <div class="history-box" id="historyBox" style="display:none;">
-  <div class="title">🕘 Последние запросы <span class="clear" id="clearHistory">очистить</span></div>
+  <div class="title">
+    <span data-i18n="historyTitle">🕘 Последние запросы</span>
+    <span class="clear" id="clearHistory" data-i18n="clear">очистить</span>
+  </div>
   <div class="items" id="historyItems"></div>
 </div>
 
@@ -874,28 +845,37 @@
 </div>
 
 <div class="quick">
-  <a href="https://mail.yandex.ru" target="_blank"><div class="ico ico-mail">✉</div>Почта</a>
-  <a href="https://yandex.ru/maps" target="_blank"><div class="ico ico-maps">🗺</div>Карты</a>
-  <a href="https://market.yandex.ru" target="_blank"><div class="ico ico-market">🛒</div>Маркет</a>
-  <a href="https://music.yandex.ru" target="_blank"><div class="ico ico-music">♪</div>Музыка</a>
-  <a href="https://yandex.ru/video" target="_blank"><div class="ico ico-video">▶</div>Видео</a>
-  <a href="https://yandex.ru/pogoda" target="_blank"><div class="ico ico-weather">☀</div>Погода</a>
-  <a href="https://dzen.ru" target="_blank"><div class="ico ico-dzen">Д</div>Дзен</a>
-  <a href="https://www.youtube.com" target="_blank"><div class="ico ico-youtube">▶</div>YouTube</a>
-  <a href="https://chatgpt.com" target="_blank"><div class="ico ico-gpt">AI</div>ChatGPT</a>
-  <a href="https://chat.deepseek.com" target="_blank"><div class="ico ico-deepseek">🐋</div>DeepSeek</a>
+  <a href="https://mail.yandex.ru" target="_blank"><div class="ico ico-mail">✉</div><span data-i18n="tileMail">Почта</span></a>
+  <a href="https://yandex.ru/maps" target="_blank"><div class="ico ico-maps">🗺</div><span data-i18n="tileMaps">Карты</span></a>
+  <a href="https://market.yandex.ru" target="_blank"><div class="ico ico-market">🛒</div><span data-i18n="tileMarket">Маркет</span></a>
+  <a href="https://music.yandex.ru" target="_blank"><div class="ico ico-music">♪</div><span data-i18n="tileMusic">Музыка</span></a>
+  <a href="https://yandex.ru/video" target="_blank"><div class="ico ico-video">▶</div><span data-i18n="tileVideo">Видео</span></a>
+  <a href="https://yandex.ru/pogoda" target="_blank"><div class="ico ico-weather">☀</div><span data-i18n="tileWeather">Погода</span></a>
+  <a href="https://dzen.ru" target="_blank"><div class="ico ico-dzen">Д</div><span data-i18n="tileDzen">Дзен</span></a>
+  <a href="https://www.youtube.com" target="_blank"><div class="ico ico-youtube">▶</div><span>YouTube</span></a>
+  <a href="https://chatgpt.com" target="_blank"><div class="ico ico-gpt">AI</div><span>ChatGPT</span></a>
+  <a href="https://chat.deepseek.com" target="_blank"><div class="ico ico-deepseek">🐋</div><span>DeepSeek</span></a>
 </div>
 
 <div class="fact-box" id="factBox">
-  <div class="label">💡 Факт дня</div>
+  <div class="label" data-i18n="factLabel">💡 Факт дня</div>
   <div id="factText">Загрузка...</div>
 </div>
 
 <div class="settings-panel" id="settingsPanel">
-  <h2>⚙ Настройки <button class="close-btn" id="closeSettings" title="Закрыть">✕</button></h2>
+  <h2><span data-i18n="settingsTitle">⚙ Настройки</span> <button class="close-btn" id="closeSettings" title="Закрыть">✕</button></h2>
 
   <div class="row">
-    <label>Логотип и поисковик</label>
+    <label data-i18n="settingLang">🌐 Язык</label>
+    <select id="setLang">
+      <option value="ru">Русский</option>
+      <option value="kz">Қазақша</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label data-i18n="settingLogo">Логотип и поисковик</label>
     <select id="setLogo">
       <option value="yandex">Яндекс</option>
       <option value="google">Google</option>
@@ -903,36 +883,223 @@
   </div>
 
   <div class="row">
-    <label>Тема</label>
+    <label data-i18n="settingTheme">Тема</label>
     <select id="setTheme">
-      <option value="light">Светлая</option>
-      <option value="dark">Тёмная</option>
+      <option value="light" data-i18n="themeLight">Светлая</option>
+      <option value="dark" data-i18n="themeDark">Тёмная</option>
     </select>
   </div>
 
   <div class="row">
-    <label>Показывать факт дня</label>
+    <label data-i18n="settingFact">Показывать факт дня</label>
     <select id="setFact">
-      <option value="yes">Да</option>
-      <option value="no">Нет</option>
+      <option value="yes" data-i18n="yes">Да</option>
+      <option value="no" data-i18n="no">Нет</option>
     </select>
   </div>
 
   <div class="row">
-    <label>Показывать историю</label>
+    <label data-i18n="settingHistory">Показывать историю</label>
     <select id="setHistory">
-      <option value="yes">Да</option>
-      <option value="no">Нет</option>
+      <option value="yes" data-i18n="yes">Да</option>
+      <option value="no" data-i18n="no">Нет</option>
     </select>
   </div>
 
   <div class="row" style="border:none; margin-top:20px; flex-direction:column; align-items:stretch; gap:10px;">
     <button style="background:#ff3f40; color:#fff; padding:10px; border:none; border-radius:8px; cursor:pointer; font-weight:600;"
-            id="resetAll">🗑 Сбросить всё</button>
+            id="resetAll" data-i18n="resetAll">🗑 Сбросить всё</button>
   </div>
 </div>
 
 <script>
+// ============================================================
+// ПЕРЕВОДЫ
+// ============================================================
+const TRANSLATIONS = {
+  ru: {
+    greeting: {
+      morning: 'Доброе утро!',
+      day: 'Добрый день!',
+      evening: 'Добрый вечер!',
+      night: 'Доброй ночи!'
+    },
+    searchPlaceholder: 'Найдётся всё',
+    searchBtn: 'Найти',
+    mail: 'Почта',
+    news: 'Новости',
+    maps: 'Карты',
+    allServices: 'Все сервисы',
+    historyTitle: '🕘 Последние запросы',
+    clear: 'очистить',
+    factLabel: '💡 Факт дня',
+    settingsTitle: '⚙ Настройки',
+    settingLang: '🌐 Язык',
+    settingLogo: 'Логотип и поисковик',
+    settingTheme: 'Тема',
+    settingFact: 'Показывать факт дня',
+    settingHistory: 'Показывать историю',
+    themeLight: 'Светлая',
+    themeDark: 'Тёмная',
+    yes: 'Да',
+    no: 'Нет',
+    resetAll: '🗑 Сбросить всё',
+    tileMail: 'Почта',
+    tileMaps: 'Карты',
+    tileMarket: 'Маркет',
+    tileMusic: 'Музыка',
+    tileVideo: 'Видео',
+    tileWeather: 'Погода',
+    tileDzen: 'Дзен',
+    loading: 'Загрузка...',
+    locale: 'ru-RU'
+  },
+  kz: {
+    greeting: {
+      morning: 'Қайырлы таң!',
+      day: 'Қайырлы күн!',
+      evening: 'Қайырлы кеш!',
+      night: 'Қайырлы түн!'
+    },
+    searchPlaceholder: 'Барлығы табылады',
+    searchBtn: 'Іздеу',
+    mail: 'Пошта',
+    news: 'Жаңалықтар',
+    maps: 'Карталар',
+    allServices: 'Барлық қызметтер',
+    historyTitle: '🕘 Соңғы сұраныстар',
+    clear: 'тазалау',
+    factLabel: '💡 Күн фактісі',
+    settingsTitle: '⚙ Параметрлер',
+    settingLang: '🌐 Тіл',
+    settingLogo: 'Логотип және іздеу',
+    settingTheme: 'Тақырып',
+    settingFact: 'Күн фактісін көрсету',
+    settingHistory: 'Тарихты көрсету',
+    themeLight: 'Жарық',
+    themeDark: 'Қараңғы',
+    yes: 'Иә',
+    no: 'Жоқ',
+    resetAll: '🗑 Барлығын тазалау',
+    tileMail: 'Пошта',
+    tileMaps: 'Карталар',
+    tileMarket: 'Маркет',
+    tileMusic: 'Музыка',
+    tileVideo: 'Бейне',
+    tileWeather: 'Ауа райы',
+    tileDzen: 'Дзен',
+    loading: 'Жүктелуде...',
+    locale: 'kk-KZ'
+  },
+  en: {
+    greeting: {
+      morning: 'Good morning!',
+      day: 'Good afternoon!',
+      evening: 'Good evening!',
+      night: 'Good night!'
+    },
+    searchPlaceholder: 'Search anything',
+    searchBtn: 'Search',
+    mail: 'Mail',
+    news: 'News',
+    maps: 'Maps',
+    allServices: 'All services',
+    historyTitle: '🕘 Recent searches',
+    clear: 'clear',
+    factLabel: '💡 Fact of the day',
+    settingsTitle: '⚙ Settings',
+    settingLang: '🌐 Language',
+    settingLogo: 'Logo and search engine',
+    settingTheme: 'Theme',
+    settingFact: 'Show fact of the day',
+    settingHistory: 'Show history',
+    themeLight: 'Light',
+    themeDark: 'Dark',
+    yes: 'Yes',
+    no: 'No',
+    resetAll: '🗑 Reset all',
+    tileMail: 'Mail',
+    tileMaps: 'Maps',
+    tileMarket: 'Market',
+    tileMusic: 'Music',
+    tileVideo: 'Video',
+    tileWeather: 'Weather',
+    tileDzen: 'Dzen',
+    loading: 'Loading...',
+    locale: 'en-US'
+  }
+};
+
+// ============================================================
+// ЧАСОВЫЕ ПОЯСА (мультиязычные)
+// ============================================================
+const TIMEZONES = [
+  { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       en: 'Moscow' },
+  { value: 'Europe/Kaliningrad', flag: '🇷🇺', ru: 'Калининград',  kz: 'Калининград',  en: 'Kaliningrad' },
+  { value: 'Europe/Samara',      flag: '🇷🇺', ru: 'Самара',       kz: 'Самара',       en: 'Samara' },
+  { value: 'Asia/Yekaterinburg', flag: '🇷🇺', ru: 'Екатеринбург', kz: 'Екатеринбург', en: 'Yekaterinburg' },
+  { value: 'Asia/Omsk',          flag: '🇷🇺', ru: 'Омск',         kz: 'Омбы',         en: 'Omsk' },
+  { value: 'Asia/Krasnoyarsk',   flag: '🇷🇺', ru: 'Красноярск',   kz: 'Красноярск',   en: 'Krasnoyarsk' },
+  { value: 'Asia/Irkutsk',       flag: '🇷🇺', ru: 'Иркутск',      kz: 'Иркутск',      en: 'Irkutsk' },
+  { value: 'Asia/Yakutsk',       flag: '🇷🇺', ru: 'Якутск',       kz: 'Якутск',       en: 'Yakutsk' },
+  { value: 'Asia/Vladivostok',   flag: '🇷🇺', ru: 'Владивосток',  kz: 'Владивосток',  en: 'Vladivostok' },
+  { value: 'Asia/Magadan',       flag: '🇷🇺', ru: 'Магадан',      kz: 'Магадан',      en: 'Magadan' },
+  { value: 'Asia/Kamchatka',     flag: '🇷🇺', ru: 'Камчатка',     kz: 'Камчатка',     en: 'Kamchatka' },
+  { value: 'Europe/Minsk',       flag: '🇧🇾', ru: 'Минск',        kz: 'Минск',        en: 'Minsk' },
+  { value: 'Asia/Almaty',        flag: '🇰🇿', ru: 'Алматы',       kz: 'Алматы',       en: 'Almaty' },
+  { value: 'Asia/Astana',        flag: '🇰🇿', ru: 'Астана',       kz: 'Астана',       en: 'Astana' },
+  { value: 'Asia/Aqtobe',        flag: '🇰🇿', ru: 'Актобе',       kz: 'Ақтөбе',       en: 'Aktobe' },
+  { value: 'Asia/Atyrau',        flag: '🇰🇿', ru: 'Атырау',       kz: 'Атырау',       en: 'Atyrau' },
+  { value: 'Asia/Oral',          flag: '🇰🇿', ru: 'Уральск',      kz: 'Орал',         en: 'Oral' },
+  { value: 'Asia/Qyzylorda',     flag: '🇰🇿', ru: 'Кызылорда',    kz: 'Қызылорда',    en: 'Kyzylorda' }
+];
+
+let currentLang = 'ru';
+
+function t(key) {
+  const lang = TRANSLATIONS[currentLang];
+  return lang[key] || TRANSLATIONS.ru[key] || key;
+}
+
+// Заполнение часовых поясов
+function renderTimezones() {
+  const tzSelect = document.getElementById('tzSelect');
+  const savedTz = LS.get('tz', 'Europe/Moscow');
+  tzSelect.innerHTML = '';
+  TIMEZONES.forEach(tz => {
+    const opt = document.createElement('option');
+    opt.value = tz.value;
+    opt.textContent = `${tz.flag} ${tz[currentLang]}`;
+    tzSelect.appendChild(opt);
+  });
+  tzSelect.value = savedTz;
+}
+
+function applyLanguage(lang) {
+  currentLang = lang;
+  LS.set('lang', lang);
+  document.getElementById('setLang').value = lang;
+  document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (TRANSLATIONS[lang][key]) {
+      el.textContent = TRANSLATIONS[lang][key];
+    }
+  });
+
+  const q = document.getElementById('q');
+  q.placeholder = t('searchPlaceholder');
+
+  renderTimezones();
+  updateGreeting();
+  updateClock();
+  renderFact();
+}
+
+// ============================================================
+// ХРАНИЛИЩЕ
+// ============================================================
 const LS = {
   get: (k, def) => {
     try { const v = localStorage.getItem(k); return v === null ? def : JSON.parse(v); }
@@ -941,60 +1108,54 @@ const LS = {
   set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
 };
 
+// ============================================================
 // ЧАСЫ
+// ============================================================
 const clockTime = document.getElementById('clockTime');
 const clockDate = document.getElementById('clockDate');
 const tzSelect = document.getElementById('tzSelect');
-tzSelect.value = LS.get('tz', 'Europe/Moscow');
 
 function updateClock() {
   const now = new Date();
-  const tz = tzSelect.value;
-  const fmt = new Intl.DateTimeFormat('ru-RU', {
+  const tz = tzSelect.value || 'Europe/Moscow';
+  const fmt = new Intl.DateTimeFormat(TRANSLATIONS[currentLang].locale, {
     timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
   });
   clockTime.textContent = fmt.format(now);
 
-  const dateFmt = new Intl.DateTimeFormat('ru-RU', {
+  const dateFmt = new Intl.DateTimeFormat(TRANSLATIONS[currentLang].locale, {
     timeZone: tz, weekday: 'short', day: 'numeric', month: 'long'
   });
   const parts = dateFmt.formatToParts(now);
   const get = t => parts.find(p => p.type === t)?.value || '';
   clockDate.textContent = `${get('weekday')}, ${get('day')} ${get('month')}`;
 }
-updateClock();
-setInterval(updateClock, 1000);
-tzSelect.addEventListener('change', () => {
-  LS.set('tz', tzSelect.value);
-  updateClock();
-});
 
+// ============================================================
 // ПРИВЕТСТВИЕ
+// ============================================================
 function updateGreeting() {
   const h = new Date().getHours();
-  let g = 'Доброй ночи!';
-  if (h >= 5 && h < 12) g = 'Доброе утро!';
-  else if (h >= 12 && h < 18) g = 'Добрый день!';
-  else if (h >= 18 && h < 23) g = 'Добрый вечер!';
-  document.getElementById('greeting').textContent = g;
+  let key = 'night';
+  if (h >= 5 && h < 12) key = 'morning';
+  else if (h >= 12 && h < 18) key = 'day';
+  else if (h >= 18 && h < 23) key = 'evening';
+  document.getElementById('greeting').textContent = TRANSLATIONS[currentLang].greeting[key];
 }
-updateGreeting();
 
+// ============================================================
 // ТЕМА
+// ============================================================
 const themeBtn = document.getElementById('themeBtn');
 function applyTheme(theme) {
   document.body.classList.toggle('dark', theme === 'dark');
   themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
   document.getElementById('setTheme').value = theme;
 }
-applyTheme(LS.get('theme', 'light'));
-themeBtn.addEventListener('click', () => {
-  const next = document.body.classList.contains('dark') ? 'light' : 'dark';
-  LS.set('theme', next);
-  applyTheme(next);
-});
 
-// ЛОГОТИП + ФЛАГИ (через JS)
+// ============================================================
+// ЛОГОТИП + ФЛАГИ
+// ============================================================
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
   google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) }
@@ -1016,7 +1177,6 @@ function setLogoContent(type) {
   logoEl.style.fontSize = '72px';
 }
 
-// Показываем/скрываем флаги через JS — работает везде
 function toggleFlags(type) {
   if (type === 'google') {
     flagsBlock.classList.add('hidden');
@@ -1040,15 +1200,9 @@ function applyLogo(type, animate = false) {
   }
 }
 
-applyLogo(LS.get('logoType', 'yandex'), false);
-
-document.getElementById('setLogo').value = LS.get('logoType', 'yandex');
-document.getElementById('setLogo').addEventListener('change', e => {
-  LS.set('logoType', e.target.value);
-  applyLogo(e.target.value, true);
-});
-
+// ============================================================
 // ПОИСК
+// ============================================================
 const q = document.getElementById('q');
 const go = document.getElementById('go');
 const autocompleteEl = document.getElementById('autocomplete');
@@ -1081,12 +1235,6 @@ function renderHistory() {
     items.appendChild(a);
   });
 }
-renderHistory();
-
-document.getElementById('clearHistory').addEventListener('click', () => {
-  LS.set('history', []);
-  renderHistory();
-});
 
 function doSearch() {
   const text = q.value.trim();
@@ -1097,12 +1245,6 @@ function doSearch() {
   window.open(url, '_blank');
   hideAutocomplete();
 }
-
-go.addEventListener('click', doSearch);
-q.addEventListener('keydown', e => {
-  if (e.key === 'Enter') doSearch();
-  else if (e.key === 'Escape') hideAutocomplete();
-});
 
 function showAutocomplete() {
   const val = q.value.trim().toLowerCase();
@@ -1124,44 +1266,72 @@ function showAutocomplete() {
   autocompleteEl.classList.add('show');
 }
 function hideAutocomplete() { autocompleteEl.classList.remove('show'); }
-q.addEventListener('input', showAutocomplete);
-q.addEventListener('focus', showAutocomplete);
-document.addEventListener('click', e => {
-  if (!e.target.closest('.search-wrap')) hideAutocomplete();
-});
 
-// ФАКТ
-const FACTS = [
-  'Мёд не портится — археологи находили съедобный мёд в гробницах возрастом 3000 лет.',
-  'У осьминога три сердца и голубая кровь.',
-  'Бананы — это ягоды, а малина — нет.',
-  'Венера вращается в обратную сторону по сравнению с другими планетами.',
-  'Улитка может спать три года подряд.',
-  'Сердце синего кита размером с небольшой автомобиль.',
-  'Молния в 5 раз горячее поверхности Солнца.',
-  'Пингвины делают предложение руки и сердца, даря камешек.',
-  'Человеческий нос различает более 1 триллиона запахов.',
-  'Страусы не прячут голову в песок — это миф.',
-  'Молоко бегемота — розового цвета.',
-  'Кошки не чувствуют сладкого вкуса.',
-  'Первая веб-камера была создана, чтобы следить за кофеваркой в Кембридже.',
-  'Первый компьютерный вирус появился в 1971 году и назывался Creeper.',
-  'Слово «Яндекс» появилось в 1993 году — тогда это была поисковая программа.',
-  'Хакеры в 1980-х использовали свисток из игрушки для обхода телефонных сетей.',
-  'Самый быстрый суперкомпьютер в мире выполняет более 1 квинтиллиона операций в секунду.'
-];
+// ============================================================
+// ФАКТ ДНЯ
+// ============================================================
+const FACTS = {
+  ru: [
+    'Мёд не портится — археологи находили съедобный мёд в гробницах возрастом 3000 лет.',
+    'У осьминога три сердца и голубая кровь.',
+    'Бананы — это ягоды, а малина — нет.',
+    'Венера вращается в обратную сторону по сравнению с другими планетами.',
+    'Улитка может спать три года подряд.',
+    'Сердце синего кита размером с небольшой автомобиль.',
+    'Молния в 5 раз горячее поверхности Солнца.',
+    'Пингвины делают предложение руки и сердца, даря камешек.',
+    'Человеческий нос различает более 1 триллиона запахов.',
+    'Страусы не прячут голову в песок — это миф.'
+  ],
+  kz: [
+    'Бал ежелден бері бұзылмайды — археологтар 3000 жылдық қабірлерден жеуге жарамды бал тапқан.',
+    'Сегізаяқтың үш жүрегі және көк қаны бар.',
+    'Банан — жидек, ал таңқурай — жоқ.',
+    'Шолпан басқа планеталарға қарағанда кері айналады.',
+    'Ұлу үш жыл қатарынан ұйықтай алады.',
+    'Көк киттің жүрегі шағын көлік көлеміндей.',
+    'Найзағай Күн бетінен 5 есе ыстық.',
+    'Пингвиндер тас сыйлап, неке ұсынады.',
+    'Адам мұрны 1 триллионнан астам иісті ажыратады.',
+    'Түйеқұстар басын құмға тықпайды — бұл миф.'
+  ],
+  en: [
+    'Honey never spoils — archaeologists found edible honey in 3000-year-old tombs.',
+    'An octopus has three hearts and blue blood.',
+    'Bananas are berries, but raspberries are not.',
+    'Venus rotates in the opposite direction compared to other planets.',
+    'A snail can sleep for three years straight.',
+    'A blue whale\'s heart is the size of a small car.',
+    'Lightning is 5 times hotter than the surface of the Sun.',
+    'Penguins propose by offering a pebble.',
+    'The human nose can distinguish over 1 trillion scents.',
+    'Ostriches don\'t bury their heads in sand — that\'s a myth.'
+  ]
+};
 
-const QUOTES = [
-  '«Единственный способ делать великую работу — любить то, что делаешь.» — Стив Джобс',
-  '«Не бойтесь медленно идти, бойтесь стоять на месте.» — китайская пословица',
-  '«Всё, что нас не убивает, делает нас сильнее.» — Фридрих Ницше',
-  '«Успех — это способность идти от неудачи к неудаче, не теряя энтузиазма.» — Уинстон Черчилль',
-  '«Лучший способ предсказать будущее — создать его.» — Питер Друкер',
-  '«Дисциплина — это мост между целью и её достижением.» — Джим Рон',
-  '«Если ты не можешь объяснить это просто, значит, ты сам не понимаешь.» — Альберт Эйнштейн',
-  '«Не откладывай на завтра то, что можно сделать сегодня.» — Бенджамин Франклин',
-  '«Тот, кто хочет — ищет возможности, кто не хочет — ищет причины.» — Сократ'
-];
+const QUOTES = {
+  ru: [
+    '«Единственный способ делать великую работу — любить то, что делаешь.» — Стив Джобс',
+    '«Не бойтесь медленно идти, бойтесь стоять на месте.» — китайская пословица',
+    '«Всё, что нас не убивает, делает нас сильнее.» — Фридрих Ницше',
+    '«Успех — это способность идти от неудачи к неудаче, не теряя энтузиазма.» — Уинстон Черчилль',
+    '«Лучший способ предсказать будущее — создать его.» — Питер Друкер'
+  ],
+  kz: [
+    '«Ұлы жұмыс істеудің жалғыз жолы — істеген ісіңді жақсы көру.» — Стив Джобс',
+    '«Баяу жүрудің қамын же, орныңда тұрып қалудан қорық.» — қытай мақалы',
+    '«Бізді өлтірмейтін нәрсе бізді күшейтеді.» — Фридрих Ницше',
+    '«Табыс — сәтсіздіктен сәтсіздікке құлшынысты жоғалтпай жүру қабілеті.» — Уинстон Черчилль',
+    '«Болашақты болжаудың ең жақсы жолы — оны жасау.» — Питер Друкер'
+  ],
+  en: [
+    '"The only way to do great work is to love what you do." — Steve Jobs',
+    '"Don\'t be afraid to move slowly, be afraid to stand still." — Chinese proverb',
+    '"What doesn\'t kill us makes us stronger." — Friedrich Nietzsche',
+    '"Success is the ability to go from failure to failure without losing enthusiasm." — Winston Churchill',
+    '"The best way to predict the future is to create it." — Peter Drucker'
+  ]
+};
 
 function renderFact() {
   const show = LS.get('showFact', true);
@@ -1169,49 +1339,117 @@ function renderFact() {
   if (!show) { box.style.display = 'none'; return; }
   box.style.display = 'block';
   const idx = Math.floor(Date.now() / 60000);
-  const fact = FACTS[idx % FACTS.length];
-  const quote = QUOTES[idx % QUOTES.length];
+  const fact = FACTS[currentLang][idx % FACTS[currentLang].length];
+  const quote = QUOTES[currentLang][idx % QUOTES[currentLang].length];
   document.getElementById('factText').innerHTML =
     `<b>${fact}</b><br><br><span style="color:#888; font-style:italic;">${quote}</span>`;
 }
-renderFact();
-setInterval(renderFact, 60000);
 
+// ============================================================
 // НАСТРОЙКИ
+// ============================================================
 const settingsPanel = document.getElementById('settingsPanel');
 function openSettings() { settingsPanel.classList.add('show'); }
 function closeSettings() { settingsPanel.classList.remove('show'); }
 
-document.getElementById('settingsBtn').addEventListener('click', openSettings);
-document.getElementById('closeSettings').addEventListener('click', closeSettings);
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeSettings();
+// ============================================================
+// ИНИЦИАЛИЗАЦИЯ
+// ============================================================
+function init() {
+  const savedLang = LS.get('lang', 'ru');
+  applyLanguage(savedLang);
+
+  applyTheme(LS.get('theme', 'light'));
+  themeBtn.addEventListener('click', () => {
+    const next = document.body.classList.contains('dark') ? 'light' : 'dark';
+    LS.set('theme', next);
+    applyTheme(next);
+  });
+
+  applyLogo(LS.get('logoType', 'yandex'), false);
+  document.getElementById('setLogo').value = LS.get('logoType', 'yandex');
+  document.getElementById('setTheme').value = LS.get('theme', 'light');
+  document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
+  document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
+
+  renderHistory();
+  updateClock();
+  setInterval(updateClock, 1000);
+  renderFact();
+  setInterval(renderFact, 60000);
+}
+
+// ============================================================
+// ОБРАБОТЧИКИ
+// ============================================================
+
+// Язык
+document.getElementById('setLang').addEventListener('change', e => {
+  applyLanguage(e.target.value);
 });
 
-document.getElementById('setTheme').value = LS.get('theme', 'light');
+// Логотип
+document.getElementById('setLogo').addEventListener('change', e => {
+  LS.set('logoType', e.target.value);
+  applyLogo(e.target.value, true);
+});
+
+// Тема
 document.getElementById('setTheme').addEventListener('change', e => {
   LS.set('theme', e.target.value);
   applyTheme(e.target.value);
 });
 
-document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
+// Факт
 document.getElementById('setFact').addEventListener('change', e => {
   LS.set('showFact', e.target.value === 'yes');
   renderFact();
 });
 
-document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
+// История
 document.getElementById('setHistory').addEventListener('change', e => {
   LS.set('showHistory', e.target.value === 'yes');
   renderHistory();
 });
 
+// Сброс
 document.getElementById('resetAll').addEventListener('click', () => {
   if (confirm('Сбросить все настройки?')) {
     localStorage.clear();
     location.reload();
   }
 });
+
+// Настройки
+document.getElementById('settingsBtn').addEventListener('click', openSettings);
+document.getElementById('closeSettings').addEventListener('click', closeSettings);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSettings();
+});
+
+// Поиск
+go.addEventListener('click', doSearch);
+q.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+  else if (e.key === 'Escape') hideAutocomplete();
+});
+q.addEventListener('input', showAutocomplete);
+q.addEventListener('focus', showAutocomplete);
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) hideAutocomplete();
+});
+
+document.getElementById('clearHistory').addEventListener('click', () => {
+  LS.set('history', []);
+  renderHistory();
+});
+
+tzSelect.addEventListener('change', () => {
+  LS.set('tz', tzSelect.value);
+  updateClock();
+});
+
+init();
 </script>
 </body>
 </html>
