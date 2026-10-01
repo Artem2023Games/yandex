@@ -87,7 +87,7 @@
     color: #666;
     margin-bottom: 20px;
     animation: fadeIn 0.9s 0.3s both;
-    transition: color 0.5s ease;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
   }
 
   /* ПОИСК */
@@ -120,7 +120,7 @@
     font-size: 17px;
     background: transparent;
     color: #000;
-    transition: color 0.5s ease;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
     box-sizing: border-box;
     font-family: inherit;
   }
@@ -133,7 +133,7 @@
     padding: 0 28px;
     cursor: pointer;
     font-weight: 600;
-    transition: background 0.5s ease;
+    transition: background 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
     font-family: inherit;
     white-space: nowrap;
     align-self: stretch;
@@ -321,7 +321,7 @@
   .topbar a {
     color: #333;
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .topbar a:hover { color: var(--accent); }
 
@@ -344,7 +344,10 @@
     font-variant-numeric: tabular-nums;
     transition: color 0.5s ease;
   }
-  .clock .date { color: #888; transition: color 0.5s ease; }
+  .clock .date {
+    color: #888;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+  }
   .clock .tz {
     background: rgba(0,0,0,0.06);
     color: #333;
@@ -422,6 +425,10 @@
   .quick a:nth-child(9) { animation-delay: 0.55s; }
   .quick a:nth-child(10){ animation-delay: 0.60s; }
 
+  .quick a span {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
   .quick a:hover { background: #f5f5f5; transform: translateY(-3px); }
   .quick .ico {
     width: 48px; height: 48px;
@@ -466,7 +473,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: color 0.5s ease;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .history-box .items {
     display: flex;
@@ -488,6 +495,7 @@
     color: #999;
     cursor: pointer;
     text-decoration: underline;
+    transition: opacity 0.25s ease, transform 0.25s ease;
   }
 
   .fact-box {
@@ -501,7 +509,7 @@
     color: #444;
     line-height: 1.5;
     animation: fadeIn 0.6s 0.8s both;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 0.5s ease, color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .fact-box .label {
     font-size: 11px;
@@ -510,7 +518,7 @@
     color: var(--accent);
     margin-bottom: 6px;
     font-weight: 600;
-    transition: color 0.5s ease;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
   }
 
   .settings-panel {
@@ -538,6 +546,9 @@
     align-items: center;
     transition: color 0.5s ease;
   }
+  .settings-panel h2 > span {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
   .settings-panel .close-btn {
     background: transparent;
     border: none;
@@ -562,7 +573,11 @@
     font-size: 14px;
     transition: border-color 0.5s ease;
   }
-  .settings-panel .row label { color: #666; flex: 1; transition: color 0.5s ease; }
+  .settings-panel .row label {
+    color: #666;
+    flex: 1;
+    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+  }
   .settings-panel .row select {
     padding: 6px 10px;
     border: 1px solid #ddd;
@@ -575,6 +590,29 @@
     transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
+
+  /* ============================================================
+     ПЛАВНАЯ СМЕНА ЯЗЫКА
+     ============================================================ */
+  body.lang-changing .greeting,
+  body.lang-changing .topbar a,
+  body.lang-changing #go,
+  body.lang-changing .history-box .title,
+  body.lang-changing .history-box .clear,
+  body.lang-changing .fact-box,
+  body.lang-changing .fact-box .label,
+  body.lang-changing .quick a span,
+  body.lang-changing .settings-panel h2 > span,
+  body.lang-changing .settings-panel .row label,
+  body.lang-changing .clock .date {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  body.lang-changing .logo {
+    opacity: 0;
+    transform: scale(0.85);
+  }
 
   @media (max-width: 900px) {
     body {
@@ -918,120 +956,63 @@
 // ============================================================
 const TRANSLATIONS = {
   ru: {
-    greeting: {
-      morning: 'Доброе утро!',
-      day: 'Добрый день!',
-      evening: 'Добрый вечер!',
-      night: 'Доброй ночи!'
-    },
+    greeting: { morning: 'Доброе утро!', day: 'Добрый день!', evening: 'Добрый вечер!', night: 'Доброй ночи!' },
     searchPlaceholder: 'Найдётся всё',
     searchBtn: 'Найти',
-    mail: 'Почта',
-    news: 'Новости',
-    maps: 'Карты',
-    allServices: 'Все сервисы',
-    historyTitle: '🕘 Последние запросы',
-    clear: 'очистить',
+    mail: 'Почта', news: 'Новости', maps: 'Карты', allServices: 'Все сервисы',
+    historyTitle: '🕘 Последние запросы', clear: 'очистить',
     factLabel: '💡 Факт дня',
     settingsTitle: '⚙ Настройки',
-    settingLang: '🌐 Язык',
-    settingLogo: 'Логотип и поисковик',
-    settingTheme: 'Тема',
-    settingFact: 'Показывать факт дня',
-    settingHistory: 'Показывать историю',
-    themeLight: 'Светлая',
-    themeDark: 'Тёмная',
-    yes: 'Да',
-    no: 'Нет',
+    settingLang: '🌐 Язык', settingLogo: 'Логотип и поисковик', settingTheme: 'Тема',
+    settingFact: 'Показывать факт дня', settingHistory: 'Показывать историю',
+    themeLight: 'Светлая', themeDark: 'Тёмная',
+    yes: 'Да', no: 'Нет',
     resetAll: '🗑 Сбросить всё',
-    tileMail: 'Почта',
-    tileMaps: 'Карты',
-    tileMarket: 'Маркет',
-    tileMusic: 'Музыка',
-    tileVideo: 'Видео',
-    tileWeather: 'Погода',
-    tileDzen: 'Дзен',
+    tileMail: 'Почта', tileMaps: 'Карты', tileMarket: 'Маркет', tileMusic: 'Музыка',
+    tileVideo: 'Видео', tileWeather: 'Погода', tileDzen: 'Дзен',
     loading: 'Загрузка...',
     locale: 'ru-RU'
   },
   kz: {
-    greeting: {
-      morning: 'Қайырлы таң!',
-      day: 'Қайырлы күн!',
-      evening: 'Қайырлы кеш!',
-      night: 'Қайырлы түн!'
-    },
+    greeting: { morning: 'Қайырлы таң!', day: 'Қайырлы күн!', evening: 'Қайырлы кеш!', night: 'Қайырлы түн!' },
     searchPlaceholder: 'Барлығы табылады',
     searchBtn: 'Іздеу',
-    mail: 'Пошта',
-    news: 'Жаңалықтар',
-    maps: 'Карталар',
-    allServices: 'Барлық қызметтер',
-    historyTitle: '🕘 Соңғы сұраныстар',
-    clear: 'тазалау',
+    mail: 'Пошта', news: 'Жаңалықтар', maps: 'Карталар', allServices: 'Барлық қызметтер',
+    historyTitle: '🕘 Соңғы сұраныстар', clear: 'тазалау',
     factLabel: '💡 Күн фактісі',
     settingsTitle: '⚙ Параметрлер',
-    settingLang: '🌐 Тіл',
-    settingLogo: 'Логотип және іздеу',
-    settingTheme: 'Тақырып',
-    settingFact: 'Күн фактісін көрсету',
-    settingHistory: 'Тарихты көрсету',
-    themeLight: 'Жарық',
-    themeDark: 'Қараңғы',
-    yes: 'Иә',
-    no: 'Жоқ',
+    settingLang: '🌐 Тіл', settingLogo: 'Логотип және іздеу', settingTheme: 'Тақырып',
+    settingFact: 'Күн фактісін көрсету', settingHistory: 'Тарихты көрсету',
+    themeLight: 'Жарық', themeDark: 'Қараңғы',
+    yes: 'Иә', no: 'Жоқ',
     resetAll: '🗑 Барлығын тазалау',
-    tileMail: 'Пошта',
-    tileMaps: 'Карталар',
-    tileMarket: 'Маркет',
-    tileMusic: 'Музыка',
-    tileVideo: 'Бейне',
-    tileWeather: 'Ауа райы',
-    tileDzen: 'Дзен',
+    tileMail: 'Пошта', tileMaps: 'Карталар', tileMarket: 'Маркет', tileMusic: 'Музыка',
+    tileVideo: 'Бейне', tileWeather: 'Ауа райы', tileDzen: 'Дзен',
     loading: 'Жүктелуде...',
     locale: 'kk-KZ'
   },
   en: {
-    greeting: {
-      morning: 'Good morning!',
-      day: 'Good afternoon!',
-      evening: 'Good evening!',
-      night: 'Good night!'
-    },
+    greeting: { morning: 'Good morning!', day: 'Good afternoon!', evening: 'Good evening!', night: 'Good night!' },
     searchPlaceholder: 'Search anything',
     searchBtn: 'Search',
-    mail: 'Mail',
-    news: 'News',
-    maps: 'Maps',
-    allServices: 'All services',
-    historyTitle: '🕘 Recent searches',
-    clear: 'clear',
+    mail: 'Mail', news: 'News', maps: 'Maps', allServices: 'All services',
+    historyTitle: '🕘 Recent searches', clear: 'clear',
     factLabel: '💡 Fact of the day',
     settingsTitle: '⚙ Settings',
-    settingLang: '🌐 Language',
-    settingLogo: 'Logo and search engine',
-    settingTheme: 'Theme',
-    settingFact: 'Show fact of the day',
-    settingHistory: 'Show history',
-    themeLight: 'Light',
-    themeDark: 'Dark',
-    yes: 'Yes',
-    no: 'No',
+    settingLang: '🌐 Language', settingLogo: 'Logo and search engine', settingTheme: 'Theme',
+    settingFact: 'Show fact of the day', settingHistory: 'Show history',
+    themeLight: 'Light', themeDark: 'Dark',
+    yes: 'Yes', no: 'No',
     resetAll: '🗑 Reset all',
-    tileMail: 'Mail',
-    tileMaps: 'Maps',
-    tileMarket: 'Market',
-    tileMusic: 'Music',
-    tileVideo: 'Video',
-    tileWeather: 'Weather',
-    tileDzen: 'Dzen',
+    tileMail: 'Mail', tileMaps: 'Maps', tileMarket: 'Market', tileMusic: 'Music',
+    tileVideo: 'Video', tileWeather: 'Weather', tileDzen: 'Dzen',
     loading: 'Loading...',
     locale: 'en-US'
   }
 };
 
 // ============================================================
-// ЧАСОВЫЕ ПОЯСА (мультиязычные)
+// ЧАСОВЫЕ ПОЯСА
 // ============================================================
 const TIMEZONES = [
   { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       en: 'Moscow' },
@@ -1061,7 +1042,6 @@ function t(key) {
   return lang[key] || TRANSLATIONS.ru[key] || key;
 }
 
-// Заполнение часовых поясов
 function renderTimezones() {
   const tzSelect = document.getElementById('tzSelect');
   const savedTz = LS.get('tz', 'Europe/Moscow');
@@ -1075,26 +1055,56 @@ function renderTimezones() {
   tzSelect.value = savedTz;
 }
 
-function applyLanguage(lang) {
-  currentLang = lang;
-  LS.set('lang', lang);
-  document.getElementById('setLang').value = lang;
-  document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+// ============================================================
+// ПЛАВНАЯ СМЕНА ЯЗЫКА
+// ============================================================
+function applyLanguage(lang, animate = true) {
+  // Если язык тот же — ничего не делаем (кроме первой инициализации)
+  if (lang === currentLang && animate) return;
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (TRANSLATIONS[lang][key]) {
-      el.textContent = TRANSLATIONS[lang][key];
+  const doChange = () => {
+    currentLang = lang;
+    LS.set('lang', lang);
+    document.getElementById('setLang').value = lang;
+    document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (TRANSLATIONS[lang][key]) {
+        el.textContent = TRANSLATIONS[lang][key];
+      }
+    });
+
+    const q = document.getElementById('q');
+    q.placeholder = t('searchPlaceholder');
+
+    renderTimezones();
+    updateGreeting();
+    updateClock();
+    renderFact();
+
+    const logoType = LS.get('logoType', 'yandex');
+    setLogoContent(logoType, lang);
+
+    const setLogo = document.getElementById('setLogo');
+    if (setLogo) {
+      setLogo.options[0].textContent = (lang === 'en') ? 'Yandex' : 'Яндекс';
     }
-  });
+  };
 
-  const q = document.getElementById('q');
-  q.placeholder = t('searchPlaceholder');
-
-  renderTimezones();
-  updateGreeting();
-  updateClock();
-  renderFact();
+  if (animate) {
+    // Плавное исчезновение
+    document.body.classList.add('lang-changing');
+    setTimeout(() => {
+      doChange();
+      // Небольшая пауза, потом плавное появление
+      setTimeout(() => {
+        document.body.classList.remove('lang-changing');
+      }, 60);
+    }, 220);
+  } else {
+    doChange();
+  }
 }
 
 // ============================================================
@@ -1168,11 +1178,15 @@ setTimeout(() => {
   logoEl.style.animation = 'none';
 }, 900);
 
-function setLogoContent(type) {
+function setLogoContent(type, lang) {
   if (type === 'google') {
     logoEl.innerHTML = '<span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span>';
   } else {
-    logoEl.innerHTML = '<span class="ya">Я</span><span class="rest">ндекс</span>';
+    if (lang === 'en') {
+      logoEl.innerHTML = '<span class="ya">Y</span><span class="rest">andex</span>';
+    } else {
+      logoEl.innerHTML = '<span class="ya">Я</span><span class="rest">ндекс</span>';
+    }
   }
   logoEl.style.fontSize = '72px';
 }
@@ -1192,11 +1206,11 @@ function applyLogo(type, animate = false) {
   if (animate) {
     logoEl.classList.add('switching');
     setTimeout(() => {
-      setLogoContent(type);
+      setLogoContent(type, currentLang);
       logoEl.classList.remove('switching');
     }, 450);
   } else {
-    setLogoContent(type);
+    setLogoContent(type, currentLang);
   }
 }
 
@@ -1357,7 +1371,7 @@ function closeSettings() { settingsPanel.classList.remove('show'); }
 // ============================================================
 function init() {
   const savedLang = LS.get('lang', 'ru');
-  applyLanguage(savedLang);
+  applyLanguage(savedLang, false); // без анимации при первой загрузке
 
   applyTheme(LS.get('theme', 'light'));
   themeBtn.addEventListener('click', () => {
@@ -1382,37 +1396,30 @@ function init() {
 // ============================================================
 // ОБРАБОТЧИКИ
 // ============================================================
-
-// Язык
 document.getElementById('setLang').addEventListener('change', e => {
-  applyLanguage(e.target.value);
+  applyLanguage(e.target.value, true);
 });
 
-// Логотип
 document.getElementById('setLogo').addEventListener('change', e => {
   LS.set('logoType', e.target.value);
   applyLogo(e.target.value, true);
 });
 
-// Тема
 document.getElementById('setTheme').addEventListener('change', e => {
   LS.set('theme', e.target.value);
   applyTheme(e.target.value);
 });
 
-// Факт
 document.getElementById('setFact').addEventListener('change', e => {
   LS.set('showFact', e.target.value === 'yes');
   renderFact();
 });
 
-// История
 document.getElementById('setHistory').addEventListener('change', e => {
   LS.set('showHistory', e.target.value === 'yes');
   renderHistory();
 });
 
-// Сброс
 document.getElementById('resetAll').addEventListener('click', () => {
   if (confirm('Сбросить все настройки?')) {
     localStorage.clear();
@@ -1420,14 +1427,12 @@ document.getElementById('resetAll').addEventListener('click', () => {
   }
 });
 
-// Настройки
 document.getElementById('settingsBtn').addEventListener('click', openSettings);
 document.getElementById('closeSettings').addEventListener('click', closeSettings);
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeSettings();
 });
 
-// Поиск
 go.addEventListener('click', doSearch);
 q.addEventListener('keydown', e => {
   if (e.key === 'Enter') doSearch();
