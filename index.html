@@ -38,7 +38,6 @@
     transition: background 0.5s ease, color 0.5s ease;
   }
 
-  /* АНИМАЦИИ */
   @keyframes logoAppear {
     0%   { opacity: 0; transform: scale(0.7) translateY(-20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -90,7 +89,6 @@
     transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
   }
 
-  /* ПОИСК */
   .search-wrap {
     display: flex;
     width: 100%;
@@ -591,7 +589,6 @@
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
 
-  /* ПЛАВНАЯ СМЕНА ЯЗЫКА */
   body.lang-changing .greeting,
   body.lang-changing .topbar a,
   body.lang-changing #go,
@@ -618,7 +615,6 @@
       padding: 16px;
       padding-top: 20px;
     }
-
     .tools {
       position: static;
       order: 0;
@@ -906,6 +902,7 @@
     <select id="setLang">
       <option value="ru">Русский</option>
       <option value="kz">Қазақша</option>
+      <option value="by">Беларуская</option>
       <option value="en">English</option>
     </select>
   </div>
@@ -989,6 +986,24 @@ const TRANSLATIONS = {
     loading: 'Жүктелуде...',
     locale: 'kk-KZ'
   },
+  by: {
+    greeting: { morning: 'Добрай раніцы!', day: 'Добры дзень!', evening: 'Добры вечар!', night: 'Дабранач!' },
+    searchPlaceholder: 'Знойдзецца ўсё',
+    searchBtn: 'Знайсці',
+    mail: 'Пошта', news: 'Навіны', maps: 'Карты', allServices: 'Усе сэрвісы',
+    historyTitle: '🕘 Апошнія запыты', clear: 'ачысціць',
+    factLabel: '💡 Факт дня',
+    settingsTitle: '⚙ Налады',
+    settingLang: '🌐 Мова', settingLogo: 'Лагатып і пошукавік', settingTheme: 'Тэма',
+    settingFact: 'Паказваць факт дня', settingHistory: 'Паказваць гісторыю',
+    themeLight: 'Светлая', themeDark: 'Цёмная',
+    yes: 'Так', no: 'Не',
+    resetAll: '🗑 Скінуць усё',
+    tileMail: 'Пошта', tileMaps: 'Карты', tileMarket: 'Маркет', tileMusic: 'Музыка',
+    tileVideo: 'Відэа', tileWeather: 'Надвор\'е', tileDzen: 'Дзэн',
+    loading: 'Загрузка...',
+    locale: 'be-BY'
+  },
   en: {
     greeting: { morning: 'Good morning!', day: 'Good afternoon!', evening: 'Good evening!', night: 'Good night!' },
     searchPlaceholder: 'Search anything',
@@ -1010,7 +1025,7 @@ const TRANSLATIONS = {
 };
 
 // ============================================================
-// МЕСЯЦЫ И ДНИ (жёстко прописаны — не зависит от локали браузера)
+// МЕСЯЦЫ И ДНИ
 // ============================================================
 const DATE_LOCALE = {
   ru: {
@@ -1020,6 +1035,10 @@ const DATE_LOCALE = {
   kz: {
     months: ['қаңтар','ақпан','наурыз','сәуір','мамыр','маусым','шілде','тамыз','қыркүйек','қазан','қараша','желтоқсан'],
     days: ['жс','дс','сс','ср','бс','жм','сб']
+  },
+  by: {
+    months: ['студзеня','лютага','сакавіка','красавіка','мая','чэрвеня','ліпеня','жніўня','верасня','кастрычніка','лістапада','снежня'],
+    days: ['нд','пн','аў','ср','чц','пт','сб']
   },
   en: {
     months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
@@ -1031,24 +1050,25 @@ const DATE_LOCALE = {
 // ЧАСОВЫЕ ПОЯСА
 // ============================================================
 const TIMEZONES = [
-  { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       en: 'Moscow' },
-  { value: 'Europe/Kaliningrad', flag: '🇷🇺', ru: 'Калининград',  kz: 'Калининград',  en: 'Kaliningrad' },
-  { value: 'Europe/Samara',      flag: '🇷🇺', ru: 'Самара',       kz: 'Самара',       en: 'Samara' },
-  { value: 'Asia/Yekaterinburg', flag: '🇷🇺', ru: 'Екатеринбург', kz: 'Екатеринбург', en: 'Yekaterinburg' },
-  { value: 'Asia/Omsk',          flag: '🇷🇺', ru: 'Омск',         kz: 'Омбы',         en: 'Omsk' },
-  { value: 'Asia/Krasnoyarsk',   flag: '🇷🇺', ru: 'Красноярск',   kz: 'Красноярск',   en: 'Krasnoyarsk' },
-  { value: 'Asia/Irkutsk',       flag: '🇷🇺', ru: 'Иркутск',      kz: 'Иркутск',      en: 'Irkutsk' },
-  { value: 'Asia/Yakutsk',       flag: '🇷🇺', ru: 'Якутск',       kz: 'Якутск',       en: 'Yakutsk' },
-  { value: 'Asia/Vladivostok',   flag: '🇷🇺', ru: 'Владивосток',  kz: 'Владивосток',  en: 'Vladivostok' },
-  { value: 'Asia/Magadan',       flag: '🇷🇺', ru: 'Магадан',      kz: 'Магадан',      en: 'Magadan' },
-  { value: 'Asia/Kamchatka',     flag: '🇷🇺', ru: 'Камчатка',     kz: 'Камчатка',     en: 'Kamchatka' },
-  { value: 'Europe/Minsk',       flag: '🇧🇾', ru: 'Минск',        kz: 'Минск',        en: 'Minsk' },
-  { value: 'Asia/Almaty',        flag: '🇰🇿', ru: 'Алматы',       kz: 'Алматы',       en: 'Almaty' },
-  { value: 'Asia/Astana',        flag: '🇰🇿', ru: 'Астана',       kz: 'Астана',       en: 'Astana' },
-  { value: 'Asia/Aqtobe',        flag: '🇰🇿', ru: 'Актобе',       kz: 'Ақтөбе',       en: 'Aktobe' },
-  { value: 'Asia/Atyrau',        flag: '🇰🇿', ru: 'Атырау',       kz: 'Атырау',       en: 'Atyrau' },
-  { value: 'Asia/Oral',          flag: '🇰🇿', ru: 'Уральск',      kz: 'Орал',         en: 'Oral' },
-  { value: 'Asia/Qyzylorda',     flag: '🇰🇿', ru: 'Кызылорда',    kz: 'Қызылорда',    en: 'Kyzylorda' }
+  { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       by: 'Масква',        en: 'Moscow' },
+  { value: 'Europe/Kaliningrad', flag: '🇷🇺', ru: 'Калининград',  kz: 'Калининград',  by: 'Калінінград',   en: 'Kaliningrad' },
+  { value: 'Europe/Samara',      flag: '🇷🇺', ru: 'Самара',       kz: 'Самара',       by: 'Самара',        en: 'Samara' },
+  { value: 'Asia/Yekaterinburg', flag: '🇷🇺', ru: 'Екатеринбург', kz: 'Екатеринбург', by: 'Екацярынбург',  en: 'Yekaterinburg' },
+  { value: 'Asia/Omsk',          flag: '🇷🇺', ru: 'Омск',         kz: 'Омбы',         by: 'Омск',          en: 'Omsk' },
+  { value: 'Asia/Krasnoyarsk',   flag: '🇷🇺', ru: 'Красноярск',   kz: 'Красноярск',   by: 'Краснаярск',    en: 'Krasnoyarsk' },
+  { value: 'Asia/Irkutsk',       flag: '🇷🇺', ru: 'Иркутск',      kz: 'Иркутск',      by: 'Іркуцк',        en: 'Irkutsk' },
+  { value: 'Asia/Yakutsk',       flag: '🇷🇺', ru: 'Якутск',       kz: 'Якутск',       by: 'Якуцк',         en: 'Yakutsk' },
+  { value: 'Asia/Vladivostok',   flag: '🇷🇺', ru: 'Владивосток',  kz: 'Владивосток',  by: 'Уладзівасток',  en: 'Vladivostok' },
+  { value: 'Asia/Magadan',       flag: '🇷🇺', ru: 'Магадан',      kz: 'Магадан',      by: 'Магадан',       en: 'Magadan' },
+  { value: 'Asia/Kamchatka',     flag: '🇷🇺', ru: 'Камчатка',     kz: 'Камчатка',     by: 'Камчатка',      en: 'Kamchatka' },
+  { value: 'Europe/Minsk',       flag: '🇧🇾', ru: 'Минск',        kz: 'Минск',        by: 'Мінск',         en: 'Minsk' },
+  { value: 'Europe/London',      flag: '🇬🇧', ru: 'Лондон',       kz: 'Лондон',       by: 'Лондан',        en: 'London' },
+  { value: 'Asia/Almaty',        flag: '🇰🇿', ru: 'Алматы',       kz: 'Алматы',       by: 'Алматы',        en: 'Almaty' },
+  { value: 'Asia/Astana',        flag: '🇰🇿', ru: 'Астана',       kz: 'Астана',       by: 'Астана',        en: 'Astana' },
+  { value: 'Asia/Aqtobe',        flag: '🇰🇿', ru: 'Актобе',       kz: 'Ақтөбе',       by: 'Актобе',        en: 'Aktobe' },
+  { value: 'Asia/Atyrau',        flag: '🇰🇿', ru: 'Атырау',       kz: 'Атырау',       by: 'Атырау',        en: 'Atyrau' },
+  { value: 'Asia/Oral',          flag: '🇰🇿', ru: 'Уральск',      kz: 'Орал',         by: 'Уральск',       en: 'Oral' },
+  { value: 'Asia/Qyzylorda',     flag: '🇰🇿', ru: 'Кызылорда',    kz: 'Қызылорда',    by: 'Кызыларда',     en: 'Kyzylorda' }
 ];
 
 let currentLang = 'ru';
@@ -1081,7 +1101,7 @@ function applyLanguage(lang, animate = true) {
     currentLang = lang;
     LS.set('lang', lang);
     document.getElementById('setLang').value = lang;
-    document.documentElement.lang = lang === 'kz' ? 'kk' : lang;
+    document.documentElement.lang = (lang === 'kz') ? 'kk' : (lang === 'by') ? 'be' : lang;
 
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.dataset.i18n;
@@ -1142,13 +1162,11 @@ function updateClock() {
   const now = new Date();
   const tz = tzSelect.value || 'Europe/Moscow';
 
-  // Время — цифры одинаковые во всех языках, Intl работает надёжно
   const fmt = new Intl.DateTimeFormat('ru-RU', {
     timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
   });
   clockTime.textContent = fmt.format(now);
 
-  // Дата — из своих массивов, чтобы не было "M10"
   const localDate = new Date(now.toLocaleString('en-US', { timeZone: tz }));
   const dayName = DATE_LOCALE[currentLang].days[localDate.getDay()];
   const dayNum = localDate.getDate();
@@ -1156,7 +1174,7 @@ function updateClock() {
 
   if (currentLang === 'en') {
     clockDate.textContent = `${dayName}, ${monthName} ${dayNum}`;
-  } else if (currentLang === 'kz') {
+  } else if (currentLang === 'kz' || currentLang === 'by') {
     clockDate.textContent = `${dayNum} ${monthName}, ${dayName}`;
   } else {
     clockDate.textContent = `${dayName}, ${dayNum} ${monthName}`;
@@ -1331,6 +1349,18 @@ const FACTS = {
     'Адам мұрны 1 триллионнан астам иісті ажыратады.',
     'Түйеқұстар басын құмға тықпайды — бұл миф.'
   ],
+  by: [
+    'Мёд не псуецца — археолагі знаходзілі ядомы мёд у грабніцах узростам 3000 гадоў.',
+    'У васьмінога тры сэрцы і блакітная кроў.',
+    'Бананы — гэта ягады, а маліна — не.',
+    'Венера круціцца ў адваротны бок у параўнанні з іншымі планетамі.',
+    'Смоўж можа спаць тры гады запар.',
+    'Сэрца сіняга кіта памерам з невялікі аўтамабіль.',
+    'Маланка ў 5 разоў гарачэйшая за паверхню Сонца.',
+    'Пінгвіны робяць прапанову рукі і сэрца, даруючы камяшок.',
+    'Чалавечы нос адрознівае больш за 1 трыльён пахаў.',
+    'Страусы не хаваюць галаву ў пясок — гэта міф.'
+  ],
   en: [
     'Honey never spoils — archaeologists found edible honey in 3000-year-old tombs.',
     'An octopus has three hearts and blue blood.',
@@ -1359,6 +1389,13 @@ const QUOTES = {
     '«Бізді өлтірмейтін нәрсе бізді күшейтеді.» — Фридрих Ницше',
     '«Табыс — сәтсіздіктен сәтсіздікке құлшынысты жоғалтпай жүру қабілеті.» — Уинстон Черчилль',
     '«Болашақты болжаудың ең жақсы жолы — оны жасау.» — Питер Друкер'
+  ],
+  by: [
+    '«Адзіны спосаб рабіць вялікую працу — любіць тое, што робіш.» — Стыў Джобс',
+    '«Не бойцеся ісці павольна, бойцеся стаяць на месцы.» — кітайская прымаўка',
+    '«Усё, што нас не забівае, робіць нас мацнейшымі.» — Фрыдрых Ніцшэ',
+    '«Поспех — гэта здольнасць ісці ад няўдачы да няўдачы, не губляючы энтузіязму.» — Уінстан Чэрчыль',
+    '«Лепшы спосаб прадказаць будучыню — стварыць яе.» — Пітэр Дракер'
   ],
   en: [
     '"The only way to do great work is to love what you do." — Steve Jobs',
