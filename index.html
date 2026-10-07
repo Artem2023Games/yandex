@@ -22,6 +22,26 @@
     --accent-dark: #3367d6;
     --accent-rgb: 66, 133, 244;
   }
+  body.bing {
+    --accent: #008373;
+    --accent-dark: #006b5d;
+    --accent-rgb: 0, 131, 115;
+  }
+  body.mail {
+    --accent: #005ff9;
+    --accent-dark: #0047c2;
+    --accent-rgb: 0, 95, 249;
+  }
+  body.duck {
+    --accent: #de5833;
+    --accent-dark: #b8441f;
+    --accent-rgb: 222, 88, 51;
+  }
+  body.yahoo {
+    --accent: #6001d2;
+    --accent-dark: #4a01a3;
+    --accent-rgb: 96, 1, 210;
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { height: 100%; }
@@ -138,14 +158,14 @@
   }
   #go:hover { background: var(--accent-dark); }
 
-  body:not(.google) .search-wrap {
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap {
     border: none;
     padding: 3px;
     background: transparent;
     overflow: visible;
     border-radius: 13px;
   }
-  body:not(.google) .search-wrap::before {
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -157,7 +177,7 @@
     animation: spin 4s linear infinite;
     z-index: 0;
   }
-  body:not(.google) .search-wrap::after {
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after {
     content: '';
     position: absolute;
     inset: 3px;
@@ -166,38 +186,62 @@
     z-index: 1;
     transition: background 0.5s ease;
   }
-  body.dark:not(.google) .search-wrap::after { background: #1a1a2e; }
-  body:not(.google) #q,
-  body:not(.google) #go {
+  body.dark:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after { background: #1a1a2e; }
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) #q,
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) #go {
     position: relative;
     z-index: 2;
     height: 100%;
   }
-  body:not(.google) .search-wrap:focus-within { box-shadow: none; }
-  body:not(.google) .search-wrap:focus-within::before {
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap:focus-within { box-shadow: none; }
+  body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap:focus-within::before {
     box-shadow: 0 0 20px rgba(252, 63, 29, 0.4);
   }
 
-  body.google .search-wrap {
+  body.google .search-wrap,
+  body.bing .search-wrap,
+  body.mail .search-wrap,
+  body.duck .search-wrap,
+  body.yahoo .search-wrap {
     border: none;
     padding: 3px;
     background: transparent;
     overflow: visible;
     border-radius: 13px;
   }
-  body.google .search-wrap::before {
+  body.google .search-wrap::before,
+  body.bing .search-wrap::before,
+  body.mail .search-wrap::before,
+  body.duck .search-wrap::before,
+  body.yahoo .search-wrap::before {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 13px;
-    background: conic-gradient(
-      from var(--angle),
-      #4285f4, #ea4335, #fbbc05, #34a853, #4285f4
-    );
     animation: spin 4s linear infinite;
     z-index: 0;
   }
-  body.google .search-wrap::after {
+  body.google .search-wrap::before {
+    background: conic-gradient(from var(--angle), #4285f4, #ea4335, #fbbc05, #34a853, #4285f4);
+  }
+  body.bing .search-wrap::before {
+    background: conic-gradient(from var(--angle), #008373, #00b7a4, #00d9c0, #00b7a4, #008373);
+  }
+  body.mail .search-wrap::before {
+    background: conic-gradient(from var(--angle), #005ff9, #ff9e00, #005ff9);
+  }
+  body.duck .search-wrap::before {
+    background: conic-gradient(from var(--angle), #de5833, #f7a072, #de5833);
+  }
+  body.yahoo .search-wrap::before {
+    background: conic-gradient(from var(--angle), #6001d2, #a155ff, #6001d2);
+  }
+
+  body.google .search-wrap::after,
+  body.bing .search-wrap::after,
+  body.mail .search-wrap::after,
+  body.duck .search-wrap::after,
+  body.yahoo .search-wrap::after {
     content: '';
     position: absolute;
     inset: 3px;
@@ -206,16 +250,32 @@
     z-index: 1;
     transition: background 0.5s ease;
   }
-  body.dark.google .search-wrap::after { background: #1a1a2e; }
-  body.google #q, body.google #go {
+  body.dark.google .search-wrap::after,
+  body.dark.bing .search-wrap::after,
+  body.dark.mail .search-wrap::after,
+  body.dark.duck .search-wrap::after,
+  body.dark.yahoo .search-wrap::after { background: #1a1a2e; }
+
+  body.google #q, body.google #go,
+  body.bing #q, body.bing #go,
+  body.mail #q, body.mail #go,
+  body.duck #q, body.duck #go,
+  body.yahoo #q, body.yahoo #go {
     position: relative;
     z-index: 2;
     height: 100%;
   }
-  body.google .search-wrap:focus-within { box-shadow: none; }
-  body.google .search-wrap:focus-within::before {
-    box-shadow: 0 0 20px rgba(66, 133, 244, 0.4);
-  }
+
+  body.google .search-wrap:focus-within,
+  body.bing .search-wrap:focus-within,
+  body.mail .search-wrap:focus-within,
+  body.duck .search-wrap:focus-within,
+  body.yahoo .search-wrap:focus-within { box-shadow: none; }
+  body.google .search-wrap:focus-within::before { box-shadow: 0 0 20px rgba(66, 133, 244, 0.4); }
+  body.bing .search-wrap:focus-within::before { box-shadow: 0 0 20px rgba(0, 131, 115, 0.4); }
+  body.mail .search-wrap:focus-within::before { box-shadow: 0 0 20px rgba(0, 95, 249, 0.4); }
+  body.duck .search-wrap:focus-within::before { box-shadow: 0 0 20px rgba(222, 88, 51, 0.4); }
+  body.yahoo .search-wrap:focus-within::before { box-shadow: 0 0 20px rgba(96, 1, 210, 0.4); }
 
   .autocomplete {
     position: absolute;
@@ -232,13 +292,6 @@
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     transition: background 0.5s ease, border-color 0.5s ease;
-  }
-  body.google .autocomplete {
-    border: none;
-    background: #fff;
-    border-radius: 0 0 12px 12px;
-    margin-top: 3px;
-    padding: 2px;
   }
   body.dark .autocomplete { background: #1a1a2e; }
   .autocomplete.show { display: block; }
@@ -584,7 +637,7 @@
     font-family: inherit;
     background: #fff;
     color: #000;
-    max-width: 160px;
+    max-width: 180px;
     transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
@@ -712,21 +765,33 @@
       line-height: 1;
     }
 
-    body:not(.google) .search-wrap,
-    body.google .search-wrap {
+    body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap,
+    body.google .search-wrap,
+    body.bing .search-wrap,
+    body.mail .search-wrap,
+    body.duck .search-wrap,
+    body.yahoo .search-wrap {
       padding: 2px;
       border-radius: 11px;
       background: transparent;
       height: 46px;
       min-height: 46px;
     }
-    body:not(.google) .search-wrap::before,
-    body.google .search-wrap::before {
+    body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::before,
+    body.google .search-wrap::before,
+    body.bing .search-wrap::before,
+    body.mail .search-wrap::before,
+    body.duck .search-wrap::before,
+    body.yahoo .search-wrap::before {
       border-radius: 11px;
       inset: 0;
     }
-    body:not(.google) .search-wrap::after,
-    body.google .search-wrap::after {
+    body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after,
+    body.google .search-wrap::after,
+    body.bing .search-wrap::after,
+    body.mail .search-wrap::after,
+    body.duck .search-wrap::after,
+    body.yahoo .search-wrap::after {
       inset: 2px;
       border-radius: 9px;
     }
@@ -760,7 +825,7 @@
     .settings-panel { width: 100%; max-width: 100%; padding: 18px; }
     .settings-panel h2 { font-size: 18px; margin-bottom: 14px; }
     .settings-panel .row { font-size: 13px; padding: 12px 0; }
-    .settings-panel .row select { font-size: 13px; max-width: 130px; }
+    .settings-panel .row select { font-size: 13px; max-width: 140px; }
   }
 
   @media (max-width: 380px) {
@@ -776,8 +841,12 @@
     #q { font-size: 13px; padding: 0 8px; height: 100%; }
     #go { font-size: 12px; padding: 0 10px; }
 
-    body:not(.google) .search-wrap,
-    body.google .search-wrap { height: 42px; min-height: 42px; }
+    body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap,
+    body.google .search-wrap,
+    body.bing .search-wrap,
+    body.mail .search-wrap,
+    body.duck .search-wrap,
+    body.yahoo .search-wrap { height: 42px; min-height: 42px; }
   }
 
   @media (hover: none) {
@@ -910,8 +979,12 @@
   <div class="row">
     <label data-i18n="settingLogo">Логотип и поисковик</label>
     <select id="setLogo">
-      <option value="yandex">Яндекс</option>
+      <option value="yandex">Яндекс (по умолчанию)</option>
       <option value="google">Google</option>
+      <option value="bing">Bing</option>
+      <option value="mail">@MAIL.RU</option>
+      <option value="duck">DuckDuckGo</option>
+      <option value="yahoo">Yahoo!</option>
     </select>
   </div>
 
@@ -1123,7 +1196,7 @@ function applyLanguage(lang, animate = true) {
 
     const setLogo = document.getElementById('setLogo');
     if (setLogo) {
-      setLogo.options[0].textContent = (lang === 'en') ? 'Yandex' : 'Яндекс';
+      setLogo.options[0].textContent = (lang === 'en') ? 'Yandex (default)' : 'Яндекс (по умолчанию)';
     }
   };
 
@@ -1204,12 +1277,19 @@ function applyTheme(theme) {
 }
 
 // ============================================================
-// ЛОГОТИП + ФЛАГИ
+// ПОИСКОВИКИ (6 штук)
 // ============================================================
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
-  google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) }
+  google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) },
+  bing:   { url: q => 'https://www.bing.com/search?q=' + encodeURIComponent(q) },
+  mail:   { url: q => 'https://go.mail.ru/search?q=' + encodeURIComponent(q) },
+  duck:   { url: q => 'https://duckduckgo.com/?q=' + encodeURIComponent(q) },
+  yahoo:  { url: q => 'https://search.yahoo.com/search?p=' + encodeURIComponent(q) }
 };
+
+// Классы для каждого поисковика (для акцентного цвета)
+const ENGINE_CLASSES = ['google', 'bing', 'mail', 'duck', 'yahoo'];
 
 const logoEl = document.getElementById('logo');
 const flagsBlock = document.getElementById('flagsBlock');
@@ -1219,38 +1299,55 @@ setTimeout(() => {
 }, 900);
 
 function setLogoContent(type, lang) {
-  if (type === 'google') {
-    logoEl.innerHTML = '<span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span>';
-  } else {
+  // Удаляем все классы поисковиков
+  ENGINE_CLASSES.forEach(cls => document.body.classList.remove(cls));
+
+  if (type === 'yandex') {
+    // Яндекс
     if (lang === 'en') {
       logoEl.innerHTML = '<span class="ya">Y</span><span class="rest">andex</span>';
     } else {
       logoEl.innerHTML = '<span class="ya">Я</span><span class="rest">ндекс</span>';
     }
+  } else if (type === 'google') {
+    logoEl.innerHTML = '<span style="color:#4285f4">G</span><span style="color:#ea4335">o</span><span style="color:#fbbc05">o</span><span style="color:#4285f4">g</span><span style="color:#34a853">l</span><span style="color:#ea4335">e</span>';
+    document.body.classList.add('google');
+  } else if (type === 'bing') {
+    logoEl.innerHTML = '<span style="color:#008373">b</span><span style="color:#008373">i</span><span style="color:#008373">n</span><span style="color:#008373">g</span>';
+    document.body.classList.add('bing');
+  } else if (type === 'mail') {
+    logoEl.innerHTML = '<span style="color:#005ff9">@</span><span style="color:#005ff9">M</span><span style="color:#ff9e00">A</span><span style="color:#005ff9">I</span><span style="color:#005ff9">L</span><span style="color:#005ff9">.</span><span style="color:#ff9e00">R</span><span style="color:#005ff9">U</span>';
+    document.body.classList.add('mail');
+  } else if (type === 'duck') {
+    logoEl.innerHTML = '<span style="color:#de5833">D</span><span style="color:#de5833">u</span><span style="color:#de5833">c</span><span style="color:#de5833">k</span><span style="color:#de5833">D</span><span style="color:#de5833">u</span><span style="color:#de5833">c</span><span style="color:#de5833">k</span><span style="color:#de5833">G</span><span style="color:#de5833">o</span>';
+    document.body.classList.add('duck');
+  } else if (type === 'yahoo') {
+    logoEl.innerHTML = '<span style="color:#6001d2">Y</span><span style="color:#6001d2">a</span><span style="color:#6001d2">h</span><span style="color:#6001d2">o</span><span style="color:#6001d2">o</span><span style="color:#6001d2">!</span>';
+    document.body.classList.add('yahoo');
   }
   logoEl.style.fontSize = '72px';
 }
 
 function toggleFlags(type) {
-  if (type === 'google') {
-    flagsBlock.classList.add('hidden');
-  } else {
+  // Флаги видны только при Яндексе
+  if (type === 'yandex') {
     flagsBlock.classList.remove('hidden');
+  } else {
+    flagsBlock.classList.add('hidden');
   }
 }
 
 function applyLogo(type, animate = false) {
-  document.body.classList.toggle('google', type === 'google');
-  toggleFlags(type);
-
   if (animate) {
     logoEl.classList.add('switching');
     setTimeout(() => {
       setLogoContent(type, currentLang);
+      toggleFlags(type);
       logoEl.classList.remove('switching');
     }, 450);
   } else {
     setLogoContent(type, currentLang);
+    toggleFlags(type);
   }
 }
 
