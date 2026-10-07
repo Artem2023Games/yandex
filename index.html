@@ -55,9 +55,160 @@
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 1s ease, color 0.8s ease;
+    position: relative;
+    overflow-x: hidden;
   }
 
+  /* ============================================================
+     ФОН ДЛЯ ТЕМ (небо / звёзды)
+     ============================================================ */
+  #bgLayer {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    transition: opacity 1s ease;
+  }
+
+  /* Звёзды (только в тёмной теме) */
+  #stars {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    overflow: hidden;
+  }
+  body.dark #stars { opacity: 1; }
+  .star {
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50%      { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* Облака (только в небесной теме) */
+  #clouds {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    overflow: hidden;
+  }
+  body.sky #clouds { opacity: 1; }
+  .cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 100px;
+    filter: blur(1px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+    animation: floatCloud linear infinite;
+  }
+  .cloud::before,
+  .cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  .cloud::before {
+    width: 60%; height: 160%;
+    left: 15%; top: -70%;
+  }
+  .cloud::after {
+    width: 45%; height: 130%;
+    right: 10%; top: -50%;
+  }
+  @keyframes floatCloud {
+    from { transform: translateX(-300px); }
+    to   { transform: translateX(calc(100vw + 300px)); }
+  }
+
+  /* ============================================================
+     ТЁМНАЯ ТЕМА
+     ============================================================ */
+  body.dark {
+    background: linear-gradient(180deg, #0a0a1f 0%, #141432 50%, #1a1a3e 100%);
+    color: #eee;
+  }
+  body.dark .topbar a, body.dark .clock { color: #bbb; }
+  body.dark .clock .time { color: #fff; }
+  body.dark .clock .date { color: #888; }
+  body.dark .logo .rest { color: #fff; }
+  body.dark .greeting { color: #aaa; }
+  body.dark #q { color: #fff; }
+  body.dark #q::placeholder { color: #888; }
+  body.dark .quick a { color: #ddd; }
+  body.dark .quick a:hover { background: rgba(255,255,255,0.08); }
+  body.dark .topbar a:hover { color: var(--accent); }
+  body.dark .tool-btn { background: rgba(255,255,255,0.15); color: #fff; }
+  body.dark .search-wrap { background: #1a1a2e; }
+  body.dark .clock .tz { background: rgba(255,255,255,0.1); color: #fff; }
+  body.dark .fact-box { background: rgba(255,255,255,0.05); color: #ccc; }
+  body.dark .history-box { background: rgba(255,255,255,0.05); }
+  body.dark .history-box a { color: #ccc; }
+  body.dark .settings-panel { background: #1a1a2e; color: #fff; }
+  body.dark .settings-panel .row { border-color: #333; }
+  body.dark .settings-panel .row select { background: #0f0f1e; color: #fff; border-color: #333; }
+  body.dark .autocomplete { background: #1a1a2e; }
+  body.dark:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after { background: #1a1a2e; }
+  body.dark.google .search-wrap::after,
+  body.dark.bing .search-wrap::after,
+  body.dark.mail .search-wrap::after,
+  body.dark.duck .search-wrap::after,
+  body.dark.yahoo .search-wrap::after { background: #1a1a2e; }
+
+  /* ============================================================
+     НЕБЕСНАЯ ТЕМА
+     ============================================================ */
+  body.sky {
+    background: linear-gradient(180deg, #4a90d9 0%, #87ceeb 40%, #b0e0e6 70%, #e0f4ff 100%);
+    color: #0a2540;
+  }
+  body.sky .topbar a,
+  body.sky .clock { color: #1a3d5c; }
+  body.sky .clock .time { color: #0a2540; }
+  body.sky .clock .date { color: #4a6d8c; }
+  body.sky .logo .rest { color: #0a2540; }
+  body.sky .greeting { color: #1a3d5c; }
+  body.sky #q { color: #0a2540; }
+  body.sky #q::placeholder { color: #6a8dad; }
+  body.sky .quick a { color: #1a3d5c; }
+  body.sky .quick a:hover { background: rgba(255,255,255,0.7); }
+  body.sky .topbar a:hover { color: var(--accent); }
+  body.sky .tool-btn { background: rgba(255,255,255,0.5); color: #1a3d5c; }
+  body.sky .tool-btn:hover { background: rgba(255,255,255,0.8); }
+  body.sky .search-wrap { background: rgba(255,255,255,0.92); }
+  body.sky .clock .tz { background: rgba(255,255,255,0.5); color: #1a3d5c; }
+  body.sky .fact-box { background: rgba(255,255,255,0.5); color: #1a3d5c; }
+  body.sky .history-box { background: rgba(255,255,255,0.5); }
+  body.sky .history-box a { color: #1a3d5c; background: rgba(255,255,255,0.7); }
+  body.sky .history-box a:hover { background: var(--accent); color: #fff; }
+  body.sky .history-box .title { color: #4a6d8c; }
+  body.sky .settings-panel { background: #f0f8ff; color: #0a2540; }
+  body.sky .settings-panel .row { border-color: #b0d4e8; }
+  body.sky .settings-panel .row label { color: #1a3d5c; }
+  body.sky .settings-panel .row select { background: #fff; color: #0a2540; border-color: #b0d4e8; }
+  body.sky .autocomplete { background: #f0f8ff; }
+  body.sky:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after { background: rgba(255,255,255,0.92); }
+  body.sky.google .search-wrap::after,
+  body.sky.bing .search-wrap::after,
+  body.sky.mail .search-wrap::after,
+  body.sky.duck .search-wrap::after,
+  body.sky.yahoo .search-wrap::after { background: rgba(255,255,255,0.92); }
+
+  /* ============================================================
+     АНИМАЦИИ
+     ============================================================ */
   @keyframes logoAppear {
     0%   { opacity: 0; transform: scale(0.7) translateY(-20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -99,14 +250,14 @@
     opacity: 0;
   }
   .logo .ya { color: var(--accent); transition: color 0.5s ease; }
-  .logo .rest { color: #000; transition: color 0.5s ease; }
+  .logo .rest { color: #000; transition: color 0.8s ease; }
 
   .greeting {
     font-size: 20px;
     color: #666;
     margin-bottom: 20px;
     animation: fadeIn 0.9s 0.3s both;
-    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
 
   .search-wrap {
@@ -119,7 +270,7 @@
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
-    transition: box-shadow 0.3s ease, background 0.5s ease, border-color 0.5s ease;
+    transition: box-shadow 0.3s ease, background 0.8s ease, border-color 0.5s ease;
     animation: searchSlide 0.5s ease;
     position: relative;
     align-items: stretch;
@@ -138,7 +289,7 @@
     font-size: 17px;
     background: transparent;
     color: #000;
-    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
     box-sizing: border-box;
     font-family: inherit;
   }
@@ -184,9 +335,8 @@
     border-radius: 10px;
     background: #fff;
     z-index: 1;
-    transition: background 0.5s ease;
+    transition: background 0.8s ease;
   }
-  body.dark:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after { background: #1a1a2e; }
   body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) #q,
   body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) #go {
     position: relative;
@@ -248,13 +398,8 @@
     border-radius: 10px;
     background: #fff;
     z-index: 1;
-    transition: background 0.5s ease;
+    transition: background 0.8s ease;
   }
-  body.dark.google .search-wrap::after,
-  body.dark.bing .search-wrap::after,
-  body.dark.mail .search-wrap::after,
-  body.dark.duck .search-wrap::after,
-  body.dark.yahoo .search-wrap::after { background: #1a1a2e; }
 
   body.google #q, body.google #go,
   body.bing #q, body.bing #go,
@@ -291,9 +436,8 @@
     z-index: 30;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    transition: background 0.5s ease, border-color 0.5s ease;
+    transition: background 0.8s ease, border-color 0.5s ease;
   }
-  body.dark .autocomplete { background: #1a1a2e; }
   .autocomplete.show { display: block; }
   .autocomplete .item {
     padding: 10px 18px;
@@ -310,32 +454,7 @@
   .autocomplete .item.active {
     background: rgba(var(--accent-rgb), 0.08);
   }
-  body.dark .autocomplete .item:hover,
-  body.dark .autocomplete .item.active {
-    background: rgba(var(--accent-rgb), 0.15);
-  }
   .autocomplete .item .ico { color: #999; font-size: 14px; }
-
-  body.dark { background: #0f0f1e; color: #eee; }
-  body.dark .topbar a, body.dark .clock { color: #bbb; }
-  body.dark .clock .time { color: #fff; }
-  body.dark .clock .date { color: #888; }
-  body.dark .logo .rest { color: #fff; }
-  body.dark .greeting { color: #aaa; }
-  body.dark #q { color: #fff; }
-  body.dark #q::placeholder { color: #888; }
-  body.dark .quick a { color: #ddd; }
-  body.dark .quick a:hover { background: rgba(255,255,255,0.08); }
-  body.dark .topbar a:hover { color: var(--accent); }
-  body.dark .tool-btn { background: rgba(255,255,255,0.15); color: #fff; }
-  body.dark .search-wrap { background: #1a1a2e; }
-  body.dark .clock .tz { background: rgba(255,255,255,0.1); color: #fff; }
-  body.dark .fact-box { background: rgba(255,255,255,0.05); color: #ccc; }
-  body.dark .history-box { background: rgba(255,255,255,0.05); }
-  body.dark .history-box a { color: #ccc; }
-  body.dark .settings-panel { background: #1a1a2e; color: #fff; }
-  body.dark .settings-panel .row { border-color: #333; }
-  body.dark .settings-panel .row select { background: #0f0f1e; color: #fff; border-color: #333; }
 
   .tools {
     position: absolute;
@@ -354,7 +473,7 @@
     border-radius: 50%;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.15s, background 0.5s ease, color 0.5s ease;
+    transition: transform 0.15s, background 0.8s ease, color 0.8s ease;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -372,7 +491,7 @@
   .topbar a {
     color: #333;
     text-decoration: none;
-    transition: color 0.3s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .topbar a:hover { color: var(--accent); }
 
@@ -385,7 +504,7 @@
     gap: 10px;
     font-size: 14px;
     color: #333;
-    transition: color 0.5s ease;
+    transition: color 0.8s ease;
     flex-wrap: wrap;
   }
   .clock .time {
@@ -393,11 +512,11 @@
     font-weight: 600;
     color: #000;
     font-variant-numeric: tabular-nums;
-    transition: color 0.5s ease;
+    transition: color 0.8s ease;
   }
   .clock .date {
     color: #888;
-    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .clock .tz {
     background: rgba(0,0,0,0.06);
@@ -409,7 +528,7 @@
     cursor: pointer;
     font-family: inherit;
     outline: none;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 0.8s ease, color 0.8s ease;
   }
 
   .flags {
@@ -461,7 +580,7 @@
     font-size: 13px;
     padding: 12px 4px;
     border-radius: 10px;
-    transition: background 0.3s ease, transform 0.15s, color 0.5s ease;
+    transition: background 0.8s ease, transform 0.15s, color 0.8s ease;
     cursor: pointer;
     animation: tilePop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
@@ -513,7 +632,7 @@
     border-radius: 12px;
     font-size: 13px;
     animation: fadeIn 0.6s 0.7s both;
-    transition: background 0.5s ease, color 0.5s ease;
+    transition: background 0.8s ease, color 0.8s ease;
   }
   .history-box .title {
     color: #888;
@@ -524,7 +643,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .history-box .items {
     display: flex;
@@ -537,7 +656,7 @@
     padding: 5px 10px;
     border-radius: 14px;
     background: #fff;
-    transition: background 0.15s, color 0.5s ease;
+    transition: background 0.15s, color 0.8s ease;
     border: 1px solid #eee;
   }
   .history-box a:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
@@ -560,7 +679,7 @@
     color: #444;
     line-height: 1.5;
     animation: fadeIn 0.6s 0.8s both;
-    transition: background 0.5s ease, color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: background 0.8s ease, color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .fact-box .label {
     font-size: 11px;
@@ -583,7 +702,7 @@
     box-shadow: -10px 0 30px rgba(0,0,0,0.15);
     z-index: 200;
     padding: 24px;
-    transition: right 0.3s ease, background 0.5s ease, color 0.5s ease;
+    transition: right 0.3s ease, background 0.8s ease, color 0.8s ease;
     overflow-y: auto;
     color: #000;
   }
@@ -622,12 +741,12 @@
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    transition: border-color 0.5s ease;
+    transition: border-color 0.8s ease;
   }
   .settings-panel .row label {
     color: #666;
     flex: 1;
-    transition: color 0.5s ease, opacity 0.25s ease, transform 0.25s ease;
+    transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
   .settings-panel .row select {
     padding: 6px 10px;
@@ -638,7 +757,7 @@
     background: #fff;
     color: #000;
     max-width: 180px;
-    transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+    transition: background 0.8s ease, color 0.8s ease, border-color 0.8s ease;
   }
   .settings-panel .row select:focus { border-color: var(--accent); outline: none; }
 
@@ -858,6 +977,11 @@
 </head>
 <body>
 
+<!-- Фоновые слои для тем -->
+<div id="bgLayer"></div>
+<div id="stars"></div>
+<div id="clouds"></div>
+
 <div class="tools">
   <button class="tool-btn" id="themeBtn" title="Тема">🌙</button>
   <button class="tool-btn" id="settingsBtn" title="Настройки">⚙</button>
@@ -979,7 +1103,7 @@
   <div class="row">
     <label data-i18n="settingLogo">Логотип и поисковик</label>
     <select id="setLogo">
-      <option value="yandex">Яндекс (по умолчанию)</option>
+      <option value="yandex">Яндекс</option>
       <option value="google">Google</option>
       <option value="bing">Bing</option>
       <option value="mail">@MAIL.RU</option>
@@ -992,6 +1116,7 @@
     <label data-i18n="settingTheme">Тема</label>
     <select id="setTheme">
       <option value="light" data-i18n="themeLight">Светлая</option>
+      <option value="sky" data-i18n="themeSky">Небесная</option>
       <option value="dark" data-i18n="themeDark">Тёмная</option>
     </select>
   </div>
@@ -1033,7 +1158,7 @@ const TRANSLATIONS = {
     settingsTitle: '⚙ Настройки',
     settingLang: '🌐 Язык', settingLogo: 'Логотип и поисковик', settingTheme: 'Тема',
     settingFact: 'Показывать факт дня', settingHistory: 'Показывать историю',
-    themeLight: 'Светлая', themeDark: 'Тёмная',
+    themeLight: 'Светлая', themeSky: 'Небесная', themeDark: 'Тёмная',
     yes: 'Да', no: 'Нет',
     resetAll: '🗑 Сбросить всё',
     tileMail: 'Почта', tileMaps: 'Карты', tileMarket: 'Маркет', tileMusic: 'Музыка',
@@ -1051,7 +1176,7 @@ const TRANSLATIONS = {
     settingsTitle: '⚙ Параметрлер',
     settingLang: '🌐 Тіл', settingLogo: 'Логотип және іздеу', settingTheme: 'Тақырып',
     settingFact: 'Күн фактісін көрсету', settingHistory: 'Тарихты көрсету',
-    themeLight: 'Жарық', themeDark: 'Қараңғы',
+    themeLight: 'Жарық', themeSky: 'Аспан', themeDark: 'Қараңғы',
     yes: 'Иә', no: 'Жоқ',
     resetAll: '🗑 Барлығын тазалау',
     tileMail: 'Пошта', tileMaps: 'Карталар', tileMarket: 'Маркет', tileMusic: 'Музыка',
@@ -1069,7 +1194,7 @@ const TRANSLATIONS = {
     settingsTitle: '⚙ Налады',
     settingLang: '🌐 Мова', settingLogo: 'Лагатып і пошукавік', settingTheme: 'Тэма',
     settingFact: 'Паказваць факт дня', settingHistory: 'Паказваць гісторыю',
-    themeLight: 'Светлая', themeDark: 'Цёмная',
+    themeLight: 'Светлая', themeSky: 'Нябесная', themeDark: 'Цёмная',
     yes: 'Так', no: 'Не',
     resetAll: '🗑 Скінуць усё',
     tileMail: 'Пошта', tileMaps: 'Карты', tileMarket: 'Маркет', tileMusic: 'Музыка',
@@ -1087,7 +1212,7 @@ const TRANSLATIONS = {
     settingsTitle: '⚙ Settings',
     settingLang: '🌐 Language', settingLogo: 'Logo and search engine', settingTheme: 'Theme',
     settingFact: 'Show fact of the day', settingHistory: 'Show history',
-    themeLight: 'Light', themeDark: 'Dark',
+    themeLight: 'Light', themeSky: 'Sky', themeDark: 'Dark',
     yes: 'Yes', no: 'No',
     resetAll: '🗑 Reset all',
     tileMail: 'Mail', tileMaps: 'Maps', tileMarket: 'Market', tileMusic: 'Music',
@@ -1193,11 +1318,6 @@ function applyLanguage(lang, animate = true) {
 
     const logoType = LS.get('logoType', 'yandex');
     setLogoContent(logoType, lang);
-
-    const setLogo = document.getElementById('setLogo');
-    if (setLogo) {
-      setLogo.options[0].textContent = (lang === 'en') ? 'Yandex (default)' : 'Яндекс (по умолчанию)';
-    }
   };
 
   if (animate) {
@@ -1223,6 +1343,49 @@ const LS = {
   },
   set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
 };
+
+// ============================================================
+// ЗВЁЗДЫ (для тёмной темы)
+// ============================================================
+function createStars() {
+  const starsEl = document.getElementById('stars');
+  starsEl.innerHTML = '';
+  const count = 80;
+  for (let i = 0; i < count; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = (Math.random() * 3) + 's';
+    star.style.animationDuration = (2 + Math.random() * 3) + 's';
+    starsEl.appendChild(star);
+  }
+}
+
+// ============================================================
+// ОБЛАКА (для небесной темы)
+// ============================================================
+function createClouds() {
+  const cloudsEl = document.getElementById('clouds');
+  cloudsEl.innerHTML = '';
+  const count = 6;
+  for (let i = 0; i < count; i++) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    const width = 80 + Math.random() * 100;
+    const height = 30 + Math.random() * 20;
+    cloud.style.width = width + 'px';
+    cloud.style.height = height + 'px';
+    cloud.style.top = (10 + Math.random() * 60) + '%';
+    cloud.style.animationDuration = (40 + Math.random() * 40) + 's';
+    cloud.style.animationDelay = (-Math.random() * 60) + 's';
+    cloud.style.opacity = 0.5 + Math.random() * 0.4;
+    cloudsEl.appendChild(cloud);
+  }
+}
 
 // ============================================================
 // ЧАСЫ
@@ -1267,17 +1430,34 @@ function updateGreeting() {
 }
 
 // ============================================================
-// ТЕМА
+// ТЕМА (3 варианта с плавной сменой)
 // ============================================================
 const themeBtn = document.getElementById('themeBtn');
+
 function applyTheme(theme) {
-  document.body.classList.toggle('dark', theme === 'dark');
-  themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
-  document.getElementById('setTheme').value = theme;
+  document.body.classList.remove('dark', 'sky');
+  if (theme === 'dark') document.body.classList.add('dark');
+  else if (theme === 'sky') document.body.classList.add('sky');
+
+  if (theme === 'dark') themeBtn.textContent = '☀️';
+  else if (theme === 'sky') themeBtn.textContent = '☁️';
+  else themeBtn.textContent = '🌙';
+
+  const setTheme = document.getElementById('setTheme');
+  if (setTheme) setTheme.value = theme;
 }
 
+// Цикл: светлая → небесная → тёмная → светлая
+themeBtn.addEventListener('click', () => {
+  const current = document.body.classList.contains('dark') ? 'dark' :
+                  document.body.classList.contains('sky') ? 'sky' : 'light';
+  const next = current === 'light' ? 'sky' : current === 'sky' ? 'dark' : 'light';
+  LS.set('theme', next);
+  applyTheme(next);
+});
+
 // ============================================================
-// ПОИСКОВИКИ (6 штук)
+// ПОИСКОВИКИ
 // ============================================================
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
@@ -1288,7 +1468,6 @@ const ENGINES = {
   yahoo:  { url: q => 'https://search.yahoo.com/search?p=' + encodeURIComponent(q) }
 };
 
-// Классы для каждого поисковика (для акцентного цвета)
 const ENGINE_CLASSES = ['google', 'bing', 'mail', 'duck', 'yahoo'];
 
 const logoEl = document.getElementById('logo');
@@ -1299,11 +1478,9 @@ setTimeout(() => {
 }, 900);
 
 function setLogoContent(type, lang) {
-  // Удаляем все классы поисковиков
   ENGINE_CLASSES.forEach(cls => document.body.classList.remove(cls));
 
   if (type === 'yandex') {
-    // Яндекс
     if (lang === 'en') {
       logoEl.innerHTML = '<span class="ya">Y</span><span class="rest">andex</span>';
     } else {
@@ -1329,7 +1506,6 @@ function setLogoContent(type, lang) {
 }
 
 function toggleFlags(type) {
-  // Флаги видны только при Яндексе
   if (type === 'yandex') {
     flagsBlock.classList.remove('hidden');
   } else {
@@ -1529,18 +1705,18 @@ function init() {
   const savedLang = LS.get('lang', 'ru');
   applyLanguage(savedLang, false);
 
-  applyTheme(LS.get('theme', 'light'));
-  themeBtn.addEventListener('click', () => {
-    const next = document.body.classList.contains('dark') ? 'light' : 'dark';
-    LS.set('theme', next);
-    applyTheme(next);
-  });
+  const savedTheme = LS.get('theme', 'light');
+  applyTheme(savedTheme);
 
   applyLogo(LS.get('logoType', 'yandex'), false);
   document.getElementById('setLogo').value = LS.get('logoType', 'yandex');
-  document.getElementById('setTheme').value = LS.get('theme', 'light');
+  document.getElementById('setTheme').value = savedTheme;
   document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
   document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
+
+  // Создаём звёзды и облака
+  createStars();
+  createClouds();
 
   renderHistory();
   updateClock();
