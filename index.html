@@ -60,18 +60,13 @@
     overflow-x: hidden;
   }
 
-  /* ============================================================
-     ФОН ДЛЯ ТЕМ (небо / звёзды)
-     ============================================================ */
   #bgLayer {
     position: fixed;
     inset: 0;
     z-index: -2;
     pointer-events: none;
-    transition: opacity 1s ease;
   }
 
-  /* Звёзды (только в тёмной теме) */
   #stars {
     position: fixed;
     inset: 0;
@@ -94,7 +89,6 @@
     50%      { opacity: 1;   transform: scale(1.2); }
   }
 
-  /* Облака (только в небесной теме) */
   #clouds {
     position: fixed;
     inset: 0;
@@ -120,22 +114,14 @@
     background: inherit;
     border-radius: 50%;
   }
-  .cloud::before {
-    width: 60%; height: 160%;
-    left: 15%; top: -70%;
-  }
-  .cloud::after {
-    width: 45%; height: 130%;
-    right: 10%; top: -50%;
-  }
+  .cloud::before { width: 60%; height: 160%; left: 15%; top: -70%; }
+  .cloud::after { width: 45%; height: 130%; right: 10%; top: -50%; }
   @keyframes floatCloud {
     from { transform: translateX(-300px); }
     to   { transform: translateX(calc(100vw + 300px)); }
   }
 
-  /* ============================================================
-     ТЁМНАЯ ТЕМА
-     ============================================================ */
+  /* ТЁМНАЯ ТЕМА */
   body.dark {
     background: linear-gradient(180deg, #0a0a1f 0%, #141432 50%, #1a1a3e 100%);
     color: #eee;
@@ -167,15 +153,12 @@
   body.dark.duck .search-wrap::after,
   body.dark.yahoo .search-wrap::after { background: #1a1a2e; }
 
-  /* ============================================================
-     НЕБЕСНАЯ ТЕМА
-     ============================================================ */
+  /* НЕБЕСНАЯ ТЕМА */
   body.sky {
     background: linear-gradient(180deg, #4a90d9 0%, #87ceeb 40%, #b0e0e6 70%, #e0f4ff 100%);
     color: #0a2540;
   }
-  body.sky .topbar a,
-  body.sky .clock { color: #1a3d5c; }
+  body.sky .topbar a, body.sky .clock { color: #1a3d5c; }
   body.sky .clock .time { color: #0a2540; }
   body.sky .clock .date { color: #4a6d8c; }
   body.sky .logo .rest { color: #0a2540; }
@@ -206,9 +189,7 @@
   body.sky.duck .search-wrap::after,
   body.sky.yahoo .search-wrap::after { background: rgba(255,255,255,0.92); }
 
-  /* ============================================================
-     АНИМАЦИИ
-     ============================================================ */
+  /* АНИМАЦИИ */
   @keyframes logoAppear {
     0%   { opacity: 0; transform: scale(0.7) translateY(-20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
@@ -221,17 +202,12 @@
     0%   { opacity: 0; transform: scale(0.5) translateY(20px); }
     100% { opacity: 1; transform: scale(1) translateY(0); }
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes flagsDrop {
     0%   { opacity: 0; transform: translateY(-20px); }
     100% { opacity: 1; transform: translateY(0); }
   }
-  @keyframes spin {
-    to { --angle: 360deg; }
-  }
+  @keyframes spin { to { --angle: 360deg; } }
 
   .logo {
     font-size: 72px;
@@ -241,14 +217,10 @@
     user-select: none;
     animation: logoAppear 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
     transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-                opacity 0.45s ease,
-                font-size 0.45s ease;
+                opacity 0.45s ease, font-size 0.45s ease;
     transform-origin: center;
   }
-  .logo.switching {
-    transform: scale(0.5) rotate(-10deg);
-    opacity: 0;
-  }
+  .logo.switching { transform: scale(0.5) rotate(-10deg); opacity: 0; }
   .logo .ya { color: var(--accent); transition: color 0.5s ease; }
   .logo .rest { color: #000; transition: color 0.8s ease; }
 
@@ -275,9 +247,7 @@
     position: relative;
     align-items: stretch;
   }
-  .search-wrap:focus-within {
-    box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15);
-  }
+  .search-wrap:focus-within { box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15); }
   #q {
     flex: 1 1 auto;
     min-width: 0;
@@ -321,10 +291,7 @@
     position: absolute;
     inset: 0;
     border-radius: 13px;
-    background: conic-gradient(
-      from var(--angle),
-      #fc3f1d, #ff7a00, #ff3f8e, #ff6b6b, #fc3f1d
-    );
+    background: conic-gradient(from var(--angle), #fc3f1d, #ff7a00, #ff3f8e, #ff6b6b, #fc3f1d);
     animation: spin 4s linear infinite;
     z-index: 0;
   }
@@ -371,21 +338,11 @@
     animation: spin 4s linear infinite;
     z-index: 0;
   }
-  body.google .search-wrap::before {
-    background: conic-gradient(from var(--angle), #4285f4, #ea4335, #fbbc05, #34a853, #4285f4);
-  }
-  body.bing .search-wrap::before {
-    background: conic-gradient(from var(--angle), #008373, #00b7a4, #00d9c0, #00b7a4, #008373);
-  }
-  body.mail .search-wrap::before {
-    background: conic-gradient(from var(--angle), #005ff9, #ff9e00, #005ff9);
-  }
-  body.duck .search-wrap::before {
-    background: conic-gradient(from var(--angle), #de5833, #f7a072, #de5833);
-  }
-  body.yahoo .search-wrap::before {
-    background: conic-gradient(from var(--angle), #6001d2, #a155ff, #6001d2);
-  }
+  body.google .search-wrap::before { background: conic-gradient(from var(--angle), #4285f4, #ea4335, #fbbc05, #34a853, #4285f4); }
+  body.bing .search-wrap::before { background: conic-gradient(from var(--angle), #008373, #00b7a4, #00d9c0, #00b7a4, #008373); }
+  body.mail .search-wrap::before { background: conic-gradient(from var(--angle), #005ff9, #ff9e00, #005ff9); }
+  body.duck .search-wrap::before { background: conic-gradient(from var(--angle), #de5833, #f7a072, #de5833); }
+  body.yahoo .search-wrap::before { background: conic-gradient(from var(--angle), #6001d2, #a155ff, #6001d2); }
 
   body.google .search-wrap::after,
   body.bing .search-wrap::after,
@@ -451,9 +408,7 @@
     z-index: 2;
   }
   .autocomplete .item:hover,
-  .autocomplete .item.active {
-    background: rgba(var(--accent-rgb), 0.08);
-  }
+  .autocomplete .item.active { background: rgba(var(--accent-rgb), 0.08); }
   .autocomplete .item .ico { color: #999; font-size: 14px; }
 
   .tools {
@@ -595,10 +550,7 @@
   .quick a:nth-child(9) { animation-delay: 0.55s; }
   .quick a:nth-child(10){ animation-delay: 0.60s; }
 
-  .quick a span {
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
+  .quick a span { transition: opacity 0.25s ease, transform 0.25s ease; }
   .quick a:hover { background: #f5f5f5; transform: translateY(-3px); }
   .quick .ico {
     width: 48px; height: 48px;
@@ -645,11 +597,7 @@
     align-items: center;
     transition: color 0.8s ease, opacity 0.25s ease, transform 0.25s ease;
   }
-  .history-box .items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
+  .history-box .items { display: flex; flex-wrap: wrap; gap: 8px; }
   .history-box a {
     color: #333;
     text-decoration: none;
@@ -716,9 +664,7 @@
     align-items: center;
     transition: color 0.5s ease;
   }
-  .settings-panel h2 > span {
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
+  .settings-panel h2 > span { transition: opacity 0.25s ease, transform 0.25s ease; }
   .settings-panel .close-btn {
     background: transparent;
     border: none;
@@ -729,10 +675,7 @@
     border-radius: 8px;
     transition: background 0.15s, color 0.15s;
   }
-  .settings-panel .close-btn:hover {
-    background: #ff3f40;
-    color: #fff;
-  }
+  .settings-panel .close-btn:hover { background: #ff3f40; color: #fff; }
   .settings-panel .row {
     padding: 14px 0;
     border-bottom: 1px solid #eee;
@@ -776,23 +719,11 @@
     transform: translateY(-6px);
   }
 
-  body.lang-changing .logo {
-    opacity: 0;
-    transform: scale(0.85);
-  }
+  body.lang-changing .logo { opacity: 0; transform: scale(0.85); }
 
   @media (max-width: 900px) {
-    body {
-      justify-content: flex-start;
-      padding: 16px;
-      padding-top: 20px;
-    }
-    .tools {
-      position: static;
-      order: 0;
-      justify-content: center;
-      margin-bottom: 10px;
-    }
+    body { justify-content: flex-start; padding: 16px; padding-top: 20px; }
+    .tools { position: static; order: 0; justify-content: center; margin-bottom: 10px; }
     .tool-btn { width: 40px; height: 40px; font-size: 17px; }
 
     .clock {
@@ -836,26 +767,17 @@
     .quick a { font-size: 13px; padding: 12px 4px; gap: 8px; }
     .quick .ico { width: 54px; height: 54px; font-size: 26px; }
 
-    .fact-box {
-      font-size: 13px;
-      padding: 12px 14px;
-      margin-top: 16px;
-    }
-
+    .fact-box { font-size: 13px; padding: 12px 14px; margin-top: 16px; }
     .history-box { padding: 10px 12px; font-size: 12px; }
   }
 
   @media (max-width: 600px) {
     body { padding: 12px; }
-
     .clock { font-size: 12px; gap: 6px; }
     .clock .time { font-size: 18px; }
     .clock .date { font-size: 12px; }
-
     .topbar { font-size: 12px; gap: 10px; margin-bottom: 12px; }
-
     .tool-btn { width: 36px; height: 36px; font-size: 15px; }
-
     .logo { font-size: 42px; letter-spacing: -2px; margin-bottom: 10px; }
     .greeting { font-size: 15px; margin-bottom: 12px; }
 
@@ -901,28 +823,18 @@
     body.bing .search-wrap::before,
     body.mail .search-wrap::before,
     body.duck .search-wrap::before,
-    body.yahoo .search-wrap::before {
-      border-radius: 11px;
-      inset: 0;
-    }
+    body.yahoo .search-wrap::before { border-radius: 11px; inset: 0; }
     body:not(.google):not(.bing):not(.mail):not(.duck):not(.yahoo) .search-wrap::after,
     body.google .search-wrap::after,
     body.bing .search-wrap::after,
     body.mail .search-wrap::after,
     body.duck .search-wrap::after,
-    body.yahoo .search-wrap::after {
-      inset: 2px;
-      border-radius: 9px;
-    }
+    body.yahoo .search-wrap::after { inset: 2px; border-radius: 9px; }
 
     .flags { gap: 10px; margin-top: 14px; }
     .flag { width: 42px; height: 28px; border-radius: 7px; }
 
-    .quick {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-top: 18px;
-    }
+    .quick { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
     .quick a { font-size: 13px; padding: 12px 4px; gap: 10px; }
     .quick .ico {
       width: 60px;
@@ -931,14 +843,8 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.22);
     }
 
-    .fact-box {
-      font-size: 12px;
-      padding: 10px 12px;
-      line-height: 1.4;
-      margin-top: 14px;
-    }
+    .fact-box { font-size: 12px; padding: 10px 12px; line-height: 1.4; margin-top: 14px; }
     .fact-box .label { font-size: 10px; }
-
     .history-box { padding: 8px 10px; font-size: 11px; }
 
     .settings-panel { width: 100%; max-width: 100%; padding: 18px; }
@@ -977,7 +883,6 @@
 </head>
 <body>
 
-<!-- Фоновые слои для тем -->
 <div id="bgLayer"></div>
 <div id="stars"></div>
 <div id="clouds"></div>
@@ -1097,6 +1002,8 @@
       <option value="kz">Қазақша</option>
       <option value="by">Беларуская</option>
       <option value="en">English</option>
+      <option value="de">Deutsch</option>
+      <option value="fr">Français</option>
     </select>
   </div>
 
@@ -1219,6 +1126,42 @@ const TRANSLATIONS = {
     tileVideo: 'Video', tileWeather: 'Weather', tileDzen: 'Dzen',
     loading: 'Loading...',
     locale: 'en-US'
+  },
+  de: {
+    greeting: { morning: 'Guten Morgen!', day: 'Guten Tag!', evening: 'Guten Abend!', night: 'Gute Nacht!' },
+    searchPlaceholder: 'Alles finden',
+    searchBtn: 'Suchen',
+    mail: 'Post', news: 'Nachrichten', maps: 'Karten', allServices: 'Alle Dienste',
+    historyTitle: '🕘 Letzte Suchanfragen', clear: 'löschen',
+    factLabel: '💡 Fakt des Tages',
+    settingsTitle: '⚙ Einstellungen',
+    settingLang: '🌐 Sprache', settingLogo: 'Logo und Suchmaschine', settingTheme: 'Design',
+    settingFact: 'Fakt des Tages anzeigen', settingHistory: 'Verlauf anzeigen',
+    themeLight: 'Hell', themeSky: 'Himmel', themeDark: 'Dunkel',
+    yes: 'Ja', no: 'Nein',
+    resetAll: '🗑 Alles zurücksetzen',
+    tileMail: 'Post', tileMaps: 'Karten', tileMarket: 'Markt', tileMusic: 'Musik',
+    tileVideo: 'Video', tileWeather: 'Wetter', tileDzen: 'Dzen',
+    loading: 'Lädt...',
+    locale: 'de-DE'
+  },
+  fr: {
+    greeting: { morning: 'Bonjour!', day: 'Bon après-midi!', evening: 'Bonsoir!', night: 'Bonne nuit!' },
+    searchPlaceholder: 'Tout trouver',
+    searchBtn: 'Rechercher',
+    mail: 'Courrier', news: 'Actualités', maps: 'Cartes', allServices: 'Tous les services',
+    historyTitle: '🕘 Recherches récentes', clear: 'effacer',
+    factLabel: '💡 Fait du jour',
+    settingsTitle: '⚙ Paramètres',
+    settingLang: '🌐 Langue', settingLogo: 'Logo et moteur', settingTheme: 'Thème',
+    settingFact: 'Afficher le fait du jour', settingHistory: 'Afficher l\'historique',
+    themeLight: 'Clair', themeSky: 'Ciel', themeDark: 'Sombre',
+    yes: 'Oui', no: 'Non',
+    resetAll: '🗑 Tout réinitialiser',
+    tileMail: 'Courrier', tileMaps: 'Cartes', tileMarket: 'Marché', tileMusic: 'Musique',
+    tileVideo: 'Vidéo', tileWeather: 'Météo', tileDzen: 'Dzen',
+    loading: 'Chargement...',
+    locale: 'fr-FR'
   }
 };
 
@@ -1241,6 +1184,14 @@ const DATE_LOCALE = {
   en: {
     months: ['January','February','March','April','May','June','July','August','September','October','November','December'],
     days: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+  },
+  de: {
+    months: ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],
+    days: ['So','Mo','Di','Mi','Do','Fr','Sa']
+  },
+  fr: {
+    months: ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],
+    days: ['dim','lun','mar','mer','jeu','ven','sam']
   }
 };
 
@@ -1248,25 +1199,25 @@ const DATE_LOCALE = {
 // ЧАСОВЫЕ ПОЯСА
 // ============================================================
 const TIMEZONES = [
-  { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       by: 'Масква',        en: 'Moscow' },
-  { value: 'Europe/Kaliningrad', flag: '🇷🇺', ru: 'Калининград',  kz: 'Калининград',  by: 'Калінінград',   en: 'Kaliningrad' },
-  { value: 'Europe/Samara',      flag: '🇷🇺', ru: 'Самара',       kz: 'Самара',       by: 'Самара',        en: 'Samara' },
-  { value: 'Asia/Yekaterinburg', flag: '🇷🇺', ru: 'Екатеринбург', kz: 'Екатеринбург', by: 'Екацярынбург',  en: 'Yekaterinburg' },
-  { value: 'Asia/Omsk',          flag: '🇷🇺', ru: 'Омск',         kz: 'Омбы',         by: 'Омск',          en: 'Omsk' },
-  { value: 'Asia/Krasnoyarsk',   flag: '🇷🇺', ru: 'Красноярск',   kz: 'Красноярск',   by: 'Краснаярск',    en: 'Krasnoyarsk' },
-  { value: 'Asia/Irkutsk',       flag: '🇷🇺', ru: 'Иркутск',      kz: 'Иркутск',      by: 'Іркуцк',        en: 'Irkutsk' },
-  { value: 'Asia/Yakutsk',       flag: '🇷🇺', ru: 'Якутск',       kz: 'Якутск',       by: 'Якуцк',         en: 'Yakutsk' },
-  { value: 'Asia/Vladivostok',   flag: '🇷🇺', ru: 'Владивосток',  kz: 'Владивосток',  by: 'Уладзівасток',  en: 'Vladivostok' },
-  { value: 'Asia/Magadan',       flag: '🇷🇺', ru: 'Магадан',      kz: 'Магадан',      by: 'Магадан',       en: 'Magadan' },
-  { value: 'Asia/Kamchatka',     flag: '🇷🇺', ru: 'Камчатка',     kz: 'Камчатка',     by: 'Камчатка',      en: 'Kamchatka' },
-  { value: 'Europe/Minsk',       flag: '🇧🇾', ru: 'Минск',        kz: 'Минск',        by: 'Мінск',         en: 'Minsk' },
-  { value: 'Europe/London',      flag: '🇬🇧', ru: 'Лондон',       kz: 'Лондон',       by: 'Лондан',        en: 'London' },
-  { value: 'Asia/Almaty',        flag: '🇰🇿', ru: 'Алматы',       kz: 'Алматы',       by: 'Алматы',        en: 'Almaty' },
-  { value: 'Asia/Astana',        flag: '🇰🇿', ru: 'Астана',       kz: 'Астана',       by: 'Астана',        en: 'Astana' },
-  { value: 'Asia/Aqtobe',        flag: '🇰🇿', ru: 'Актобе',       kz: 'Ақтөбе',       by: 'Актобе',        en: 'Aktobe' },
-  { value: 'Asia/Atyrau',        flag: '🇰🇿', ru: 'Атырау',       kz: 'Атырау',       by: 'Атырау',        en: 'Atyrau' },
-  { value: 'Asia/Oral',          flag: '🇰🇿', ru: 'Уральск',      kz: 'Орал',         by: 'Уральск',       en: 'Oral' },
-  { value: 'Asia/Qyzylorda',     flag: '🇰🇿', ru: 'Кызылорда',    kz: 'Қызылорда',    by: 'Кызыларда',     en: 'Kyzylorda' }
+  { value: 'Europe/Moscow',      flag: '🇷🇺', ru: 'Москва',       kz: 'Мәскеу',       by: 'Масква',        en: 'Moscow',      de: 'Moskau',       fr: 'Moscou' },
+  { value: 'Europe/Kaliningrad', flag: '🇷🇺', ru: 'Калининград',  kz: 'Калининград',  by: 'Калінінград',   en: 'Kaliningrad', de: 'Kaliningrad',  fr: 'Kaliningrad' },
+  { value: 'Europe/Samara',      flag: '🇷🇺', ru: 'Самара',       kz: 'Самара',       by: 'Самара',        en: 'Samara',      de: 'Samara',       fr: 'Samara' },
+  { value: 'Asia/Yekaterinburg', flag: '🇷🇺', ru: 'Екатеринбург', kz: 'Екатеринбург', by: 'Екацярынбург',  en: 'Yekaterinburg', de: 'Jekaterinburg', fr: 'Iekaterinbourg' },
+  { value: 'Asia/Omsk',          flag: '🇷🇺', ru: 'Омск',         kz: 'Омбы',         by: 'Омск',          en: 'Omsk',        de: 'Omsk',         fr: 'Omsk' },
+  { value: 'Asia/Krasnoyarsk',   flag: '🇷🇺', ru: 'Красноярск',   kz: 'Красноярск',   by: 'Краснаярск',    en: 'Krasnoyarsk', de: 'Krasnojarsk',  fr: 'Krasnoïarsk' },
+  { value: 'Asia/Irkutsk',       flag: '🇷🇺', ru: 'Иркутск',      kz: 'Иркутск',      by: 'Іркуцк',        en: 'Irkutsk',     de: 'Irkutsk',      fr: 'Irkoutsk' },
+  { value: 'Asia/Yakutsk',       flag: '🇷🇺', ru: 'Якутск',       kz: 'Якутск',       by: 'Якуцк',         en: 'Yakutsk',     de: 'Jakutsk',      fr: 'Iakoutsk' },
+  { value: 'Asia/Vladivostok',   flag: '🇷🇺', ru: 'Владивосток',  kz: 'Владивосток',  by: 'Уладзівасток',  en: 'Vladivostok', de: 'Wladiwostok',  fr: 'Vladivostok' },
+  { value: 'Asia/Magadan',       flag: '🇷🇺', ru: 'Магадан',      kz: 'Магадан',      by: 'Магадан',       en: 'Magadan',     de: 'Magadan',      fr: 'Magadan' },
+  { value: 'Asia/Kamchatka',     flag: '🇷🇺', ru: 'Камчатка',     kz: 'Камчатка',     by: 'Камчатка',      en: 'Kamchatka',   de: 'Kamtschatka',  fr: 'Kamtchatka' },
+  { value: 'Europe/Minsk',       flag: '🇧🇾', ru: 'Минск',        kz: 'Минск',        by: 'Мінск',         en: 'Minsk',       de: 'Minsk',        fr: 'Minsk' },
+  { value: 'Europe/London',      flag: '🇬🇧', ru: 'Лондон',       kz: 'Лондон',       by: 'Лондан',        en: 'London',      de: 'London',       fr: 'Londres' },
+  { value: 'Asia/Almaty',        flag: '🇰🇿', ru: 'Алматы',       kz: 'Алматы',       by: 'Алматы',        en: 'Almaty',      de: 'Almaty',       fr: 'Almaty' },
+  { value: 'Asia/Astana',        flag: '🇰🇿', ru: 'Астана',       kz: 'Астана',       by: 'Астана',        en: 'Astana',      de: 'Astana',       fr: 'Astana' },
+  { value: 'Asia/Aqtobe',        flag: '🇰🇿', ru: 'Актобе',       kz: 'Ақтөбе',       by: 'Актобе',        en: 'Aktobe',      de: 'Aktöbe',       fr: 'Aktioubé' },
+  { value: 'Asia/Atyrau',        flag: '🇰🇿', ru: 'Атырау',       kz: 'Атырау',       by: 'Атырау',        en: 'Atyrau',      de: 'Atyrau',       fr: 'Atyraou' },
+  { value: 'Asia/Oral',          flag: '🇰🇿', ru: 'Уральск',      kz: 'Орал',         by: 'Уральск',       en: 'Oral',        de: 'Oral',         fr: 'Oral' },
+  { value: 'Asia/Qyzylorda',     flag: '🇰🇿', ru: 'Кызылорда',    kz: 'Қызылорда',    by: 'Кызыларда',     en: 'Kyzylorda',   de: 'Kysylorda',    fr: 'Kyzylorda' }
 ];
 
 let currentLang = 'ru';
@@ -1283,15 +1234,12 @@ function renderTimezones() {
   TIMEZONES.forEach(tz => {
     const opt = document.createElement('option');
     opt.value = tz.value;
-    opt.textContent = `${tz.flag} ${tz[currentLang]}`;
+    opt.textContent = `${tz.flag} ${tz[currentLang] || tz.en}`;
     tzSelect.appendChild(opt);
   });
   tzSelect.value = savedTz;
 }
 
-// ============================================================
-// ПЛАВНАЯ СМЕНА ЯЗЫКА
-// ============================================================
 function applyLanguage(lang, animate = true) {
   if (lang === currentLang && animate) return;
 
@@ -1344,14 +1292,11 @@ const LS = {
   set: (k, v) => localStorage.setItem(k, JSON.stringify(v))
 };
 
-// ============================================================
-// ЗВЁЗДЫ (для тёмной темы)
-// ============================================================
+// ЗВЁЗДЫ
 function createStars() {
   const starsEl = document.getElementById('stars');
   starsEl.innerHTML = '';
-  const count = 80;
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 80; i++) {
     const star = document.createElement('div');
     star.className = 'star';
     const size = Math.random() * 2.5 + 1;
@@ -1365,14 +1310,11 @@ function createStars() {
   }
 }
 
-// ============================================================
-// ОБЛАКА (для небесной темы)
-// ============================================================
+// ОБЛАКА
 function createClouds() {
   const cloudsEl = document.getElementById('clouds');
   cloudsEl.innerHTML = '';
-  const count = 6;
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < 6; i++) {
     const cloud = document.createElement('div');
     cloud.className = 'cloud';
     const width = 80 + Math.random() * 100;
@@ -1387,9 +1329,7 @@ function createClouds() {
   }
 }
 
-// ============================================================
 // ЧАСЫ
-// ============================================================
 const clockTime = document.getElementById('clockTime');
 const clockDate = document.getElementById('clockDate');
 const tzSelect = document.getElementById('tzSelect');
@@ -1408,8 +1348,8 @@ function updateClock() {
   const dayNum = localDate.getDate();
   const monthName = DATE_LOCALE[currentLang].months[localDate.getMonth()];
 
-  if (currentLang === 'en') {
-    clockDate.textContent = `${dayName}, ${monthName} ${dayNum}`;
+  if (currentLang === 'en' || currentLang === 'de' || currentLang === 'fr') {
+    clockDate.textContent = `${dayName}, ${dayNum} ${monthName}`;
   } else if (currentLang === 'kz' || currentLang === 'by') {
     clockDate.textContent = `${dayNum} ${monthName}, ${dayName}`;
   } else {
@@ -1417,9 +1357,7 @@ function updateClock() {
   }
 }
 
-// ============================================================
 // ПРИВЕТСТВИЕ
-// ============================================================
 function updateGreeting() {
   const h = new Date().getHours();
   let key = 'night';
@@ -1429,11 +1367,8 @@ function updateGreeting() {
   document.getElementById('greeting').textContent = TRANSLATIONS[currentLang].greeting[key];
 }
 
-// ============================================================
-// ТЕМА (3 варианта с плавной сменой)
-// ============================================================
+// ТЕМА
 const themeBtn = document.getElementById('themeBtn');
-
 function applyTheme(theme) {
   document.body.classList.remove('dark', 'sky');
   if (theme === 'dark') document.body.classList.add('dark');
@@ -1447,7 +1382,6 @@ function applyTheme(theme) {
   if (setTheme) setTheme.value = theme;
 }
 
-// Цикл: светлая → небесная → тёмная → светлая
 themeBtn.addEventListener('click', () => {
   const current = document.body.classList.contains('dark') ? 'dark' :
                   document.body.classList.contains('sky') ? 'sky' : 'light';
@@ -1456,9 +1390,7 @@ themeBtn.addEventListener('click', () => {
   applyTheme(next);
 });
 
-// ============================================================
 // ПОИСКОВИКИ
-// ============================================================
 const ENGINES = {
   yandex: { url: q => 'https://yandex.ru/search/?text=' + encodeURIComponent(q) },
   google: { url: q => 'https://www.google.com/search?q=' + encodeURIComponent(q) },
@@ -1469,19 +1401,16 @@ const ENGINES = {
 };
 
 const ENGINE_CLASSES = ['google', 'bing', 'mail', 'duck', 'yahoo'];
-
 const logoEl = document.getElementById('logo');
 const flagsBlock = document.getElementById('flagsBlock');
 
-setTimeout(() => {
-  logoEl.style.animation = 'none';
-}, 900);
+setTimeout(() => { logoEl.style.animation = 'none'; }, 900);
 
 function setLogoContent(type, lang) {
   ENGINE_CLASSES.forEach(cls => document.body.classList.remove(cls));
 
   if (type === 'yandex') {
-    if (lang === 'en') {
+    if (lang === 'en' || lang === 'de' || lang === 'fr') {
       logoEl.innerHTML = '<span class="ya">Y</span><span class="rest">andex</span>';
     } else {
       logoEl.innerHTML = '<span class="ya">Я</span><span class="rest">ндекс</span>';
@@ -1506,11 +1435,8 @@ function setLogoContent(type, lang) {
 }
 
 function toggleFlags(type) {
-  if (type === 'yandex') {
-    flagsBlock.classList.remove('hidden');
-  } else {
-    flagsBlock.classList.add('hidden');
-  }
+  if (type === 'yandex') flagsBlock.classList.remove('hidden');
+  else flagsBlock.classList.add('hidden');
 }
 
 function applyLogo(type, animate = false) {
@@ -1527,9 +1453,7 @@ function applyLogo(type, animate = false) {
   }
 }
 
-// ============================================================
 // ПОИСК
-// ============================================================
 const q = document.getElementById('q');
 const go = document.getElementById('go');
 const autocompleteEl = document.getElementById('autocomplete');
@@ -1594,9 +1518,7 @@ function showAutocomplete() {
 }
 function hideAutocomplete() { autocompleteEl.classList.remove('show'); }
 
-// ============================================================
 // ФАКТ ДНЯ
-// ============================================================
 const FACTS = {
   ru: [
     'Мёд не портится — археологи находили съедобный мёд в гробницах возрастом 3000 лет.',
@@ -1645,6 +1567,30 @@ const FACTS = {
     'Penguins propose by offering a pebble.',
     'The human nose can distinguish over 1 trillion scents.',
     'Ostriches don\'t bury their heads in sand — that\'s a myth.'
+  ],
+  de: [
+    'Honig verdirbt nie — Archäologen fanden essbaren Honig in 3000 Jahre alten Gräbern.',
+    'Ein Oktopus hat drei Herzen und blaues Blut.',
+    'Bananen sind Beeren, aber Himbeeren nicht.',
+    'Venus dreht sich in die entgegengesetzte Richtung zu anderen Planeten.',
+    'Eine Schnecke kann drei Jahre am Stück schlafen.',
+    'Das Herz eines Blauwals ist so groß wie ein Kleinwagen.',
+    'Blitze sind 5-mal heißer als die Oberfläche der Sonne.',
+    'Pinguine machen einen Heiratsantrag mit einem Kieselstein.',
+    'Die menschliche Nase kann über 1 Billion Gerüche unterscheiden.',
+    'Strauße vergraben ihre Köpfe nicht im Sand — das ist ein Mythos.'
+  ],
+  fr: [
+    'Le miel ne se gâte jamais — des archéologues ont trouvé du miel comestible dans des tombeaux vieux de 3000 ans.',
+    'Une pieuvre a trois cœurs et du sang bleu.',
+    'Les bananes sont des baies, mais les framboises non.',
+    'Vénus tourne dans la direction opposée aux autres planètes.',
+    'Un escargot peut dormir trois ans d\'affilée.',
+    'Le cœur d\'une baleine bleue a la taille d\'une petite voiture.',
+    'La foudre est 5 fois plus chaude que la surface du Soleil.',
+    'Les pingouins font une demande en mariage avec un galet.',
+    'Le nez humain peut distinguer plus d\'un billion d\'odeurs.',
+    'Les autruches n\'enfouissent pas leur tête dans le sable — c\'est un mythe.'
   ]
 };
 
@@ -1676,6 +1622,20 @@ const QUOTES = {
     '"What doesn\'t kill us makes us stronger." — Friedrich Nietzsche',
     '"Success is the ability to go from failure to failure without losing enthusiasm." — Winston Churchill',
     '"The best way to predict the future is to create it." — Peter Drucker'
+  ],
+  de: [
+    '"Der einzige Weg, großartige Arbeit zu leisten, ist zu lieben, was man tut." — Steve Jobs',
+    '"Fürchte dich nicht, langsam zu gehen, fürchte dich, stillzustehen." — chinesisches Sprichwort',
+    '"Was uns nicht umbringt, macht uns stärker." — Friedrich Nietzsche',
+    '"Erfolg ist die Fähigkeit, von Misserfolg zu Misserfolg zu gehen, ohne die Begeisterung zu verlieren." — Winston Churchill',
+    '"Der beste Weg, die Zukunft vorherzusagen, ist, sie zu erschaffen." — Peter Drucker'
+  ],
+  fr: [
+    '"La seule façon de faire un excellent travail est d\'aimer ce que vous faites." — Steve Jobs',
+    '"Ne craignez pas d\'avancer lentement, craignez de rester immobile." — proverbe chinois',
+    '"Ce qui ne nous tue pas nous rend plus forts." — Friedrich Nietzsche',
+    '"Le succès, c\'est la capacité d\'aller d\'échec en échec sans perdre son enthousiasme." — Winston Churchill',
+    '"La meilleure façon de prédire l\'avenir, c\'est de le créer." — Peter Drucker'
   ]
 };
 
@@ -1691,16 +1651,12 @@ function renderFact() {
     `<b>${fact}</b><br><br><span style="color:#888; font-style:italic;">${quote}</span>`;
 }
 
-// ============================================================
 // НАСТРОЙКИ
-// ============================================================
 const settingsPanel = document.getElementById('settingsPanel');
 function openSettings() { settingsPanel.classList.add('show'); }
 function closeSettings() { settingsPanel.classList.remove('show'); }
 
-// ============================================================
 // ИНИЦИАЛИЗАЦИЯ
-// ============================================================
 function init() {
   const savedLang = LS.get('lang', 'ru');
   applyLanguage(savedLang, false);
@@ -1714,7 +1670,6 @@ function init() {
   document.getElementById('setFact').value = LS.get('showFact', true) ? 'yes' : 'no';
   document.getElementById('setHistory').value = LS.get('showHistory', true) ? 'yes' : 'no';
 
-  // Создаём звёзды и облака
   createStars();
   createClouds();
 
@@ -1725,9 +1680,6 @@ function init() {
   setInterval(renderFact, 60000);
 }
 
-// ============================================================
-// ОБРАБОТЧИКИ
-// ============================================================
 document.getElementById('setLang').addEventListener('change', e => {
   applyLanguage(e.target.value, true);
 });
